@@ -1,0 +1,1003 @@
+Attributes of geom_model:
+  __address__
+  __class__
+  __copy__
+  __deepcopy__
+  __delattr__
+  __dict__
+  __dir__
+  __doc__
+  __eq__
+  __format__
+  __ge__
+  __getattribute__
+  __getinitargs__
+  __getstate__
+  __getstate_manages_dict__
+  __gt__
+  __hash__
+  __init__
+  __init_subclass__
+  __le__
+  __lt__
+  __module__
+  __ne__
+  __new__
+  __reduce__
+  __reduce_ex__
+  __repr__
+  __safe_for_unpickling__
+  __setattr__
+  __setstate__
+  __sizeof__
+  __str__
+  __subclasshook__
+  __weakref__
+  addAllCollisionPairs
+  addCollisionPair
+  addGeometryObject
+  clone
+  collisionPairMapping
+  collisionPairs
+  copy
+  createData
+  existCollisionPair
+  existGeometryName
+  findCollisionPair
+  geometryObjects
+  getGeometryId
+  loadFromBinary
+  loadFromString
+  loadFromText
+  loadFromXML
+  ngeoms
+  removeAllCollisionPairs
+  removeCollisionPair
+  removeGeometryObject
+  saveToBinary
+  saveToString
+  saveToText
+  saveToXML
+  setCollisionPairs
+
+Attributes of geom_model.collisionPairs:
+  __class__
+  __contains__
+  __copy__
+  __deepcopy__
+  __delattr__
+  __delitem__
+  __dict__
+  __dir__
+  __doc__
+  __eq__
+  __format__
+  __ge__
+  __getattribute__
+  __getinitargs__
+  __getitem__
+  __getstate__
+  __getstate_manages_dict__
+  __gt__
+  __hash__
+  __init__
+  __init_subclass__
+  __instance_size__
+  __iter__
+  __le__
+  __len__
+  __lt__
+  __module__
+  __ne__
+  __new__
+  __reduce__
+  __reduce_ex__
+  __repr__
+  __safe_for_unpickling__
+  __setattr__
+  __setitem__
+  __setstate__
+  __sizeof__
+  __str__
+  __subclasshook__
+  __weakref__
+  append
+  copy
+  extend
+  id
+  reserve
+  tolist
+
+Documentation of collisionPairs[i]:
+Pair of ordered index defining a pair of collisions
+
+Attributes of geom_model.collisionPairs[i]:
+  __class__
+  __copy__
+  __deepcopy__
+  __delattr__
+  __dict__
+  __dir__
+  __doc__
+  __eq__
+  __format__
+  __ge__
+  __getattribute__
+  __getstate__
+  __gt__
+  __hash__
+  __init__
+  __init_subclass__
+  __le__
+  __lt__
+  __module__
+  __ne__
+  __new__
+  __reduce__
+  __reduce_ex__
+  __repr__
+  __setattr__
+  __sizeof__
+  __str__
+  __subclasshook__
+  __weakref__
+  copy
+  first
+  second
+
+Attributes of geom_model.findCollisionPair:
+  __call__
+  __class__
+  __delattr__
+  __dir__
+  __doc__
+  __eq__
+  __format__
+  __func__
+  __ge__
+  __get__
+  __getattribute__
+  __getstate__
+  __gt__
+  __hash__
+  __init__
+  __init_subclass__
+  __le__
+  __lt__
+  __ne__
+  __new__
+  __reduce__
+  __reduce_ex__
+  __repr__
+  __self__
+  __setattr__
+  __sizeof__
+  __str__
+  __subclasshook__
+
+Attributes of geom_model.geometryObjects[i]:
+  CreateCapsule
+  __address__
+  __class__
+  __copy__
+  __deepcopy__
+  __delattr__
+  __dict__
+  __dir__
+  __doc__
+  __eq__
+  __format__
+  __ge__
+  __getattribute__
+  __getinitargs__
+  __getstate__
+  __getstate_manages_dict__
+  __gt__
+  __hash__
+  __init__
+  __init_subclass__
+  __le__
+  __lt__
+  __module__
+  __ne__
+  __new__
+  __reduce__
+  __reduce_ex__
+  __repr__
+  __safe_for_unpickling__
+  __setattr__
+  __setstate__
+  __sizeof__
+  __str__
+  __subclasshook__
+  __weakref__
+  clone
+  copy
+  disableCollision
+  geometry
+  loadFromBinary
+  loadFromString
+  loadFromText
+  loadFromXML
+  meshColor
+  meshMaterial
+  meshPath
+  meshScale
+  meshTexturePath
+  name
+  overrideMaterial
+  parentFrame
+  parentJoint
+  placement
+  saveToBinary
+  saveToString
+  saveToText
+  saveToXML
+
+Documentation of geom_model.geometryObjects[i]: 
+A wrapper on a collision geometry including its parent joint, parent frame, placement in parent joint's frame.
+
+
+
+Attributes of geom_data:
+  __address__
+  __class__
+  __copy__
+  __deepcopy__
+  __delattr__
+  __dict__
+  __dir__
+  __doc__
+  __eq__
+  __format__
+  __ge__
+  __getattribute__
+  __getstate__
+  __gt__
+  __hash__
+  __init__
+  __init_subclass__
+  __le__
+  __lt__
+  __module__
+  __ne__
+  __new__
+  __reduce__
+  __reduce_ex__
+  __repr__
+  __setattr__
+  __sizeof__
+  __str__
+  __subclasshook__
+  __weakref__
+  activateCollisionPair
+  activeCollisionPairs
+  collisionRequests
+  collisionResults
+  collision_functors
+  copy
+  deactivateAllCollisionPairs
+  deactivateCollisionPair
+  distanceRequests
+  distanceResults
+  distance_functors
+  fillInnerOuterObjectMaps
+  loadFromBinary
+  loadFromString
+  loadFromText
+  loadFromXML
+  oMg
+  radius
+  saveToBinary
+  saveToString
+  saveToText
+  saveToXML
+  setActiveCollisionPairs
+  setGeometryCollisionStatus
+  setSecurityMargins
+
+Attributes of geom_data.collisionResults[i]:
+  __class__
+  __delattr__
+  __dict__
+  __dir__
+  __doc__
+  __eq__
+  __format__
+  __ge__
+  __getattribute__
+  __getstate__
+  __gt__
+  __hash__
+  __init__
+  __init_subclass__
+  __le__
+  __lt__
+  __module__
+  __ne__
+  __new__
+  __reduce__
+  __reduce_ex__
+  __repr__
+  __setattr__
+  __sizeof__
+  __str__
+  __subclasshook__
+  __weakref__
+  addContact
+  cached_gjk_guess
+  cached_support_func_guess
+  clear
+  distance_lower_bound
+  getContact
+  getContacts
+  isCollision
+  loadFromBinary
+  loadFromBuffer
+  loadFromString
+  loadFromText
+  loadFromXML
+  numContacts
+  saveToBinary
+  saveToBuffer
+  saveToString
+  saveToText
+  saveToXML
+  timings
+
+Attributes of geom_data.distanceResults[i]:
+  __class__
+  __delattr__
+  __dict__
+  __dir__
+  __doc__
+  __eq__
+  __format__
+  __ge__
+  __getattribute__
+  __getstate__
+  __gt__
+  __hash__
+  __init__
+  __init_subclass__
+  __le__
+  __lt__
+  __module__
+  __ne__
+  __new__
+  __reduce__
+  __reduce_ex__
+  __repr__
+  __setattr__
+  __sizeof__
+  __str__
+  __subclasshook__
+  __weakref__
+  b1
+  b2
+  cached_gjk_guess
+  cached_support_func_guess
+  clear
+  getNearestPoint1
+  getNearestPoint2
+  loadFromBinary
+  loadFromBuffer
+  loadFromString
+  loadFromText
+  loadFromXML
+  min_distance
+  nearest_points
+  normal
+  o1
+  o2
+  saveToBinary
+  saveToBuffer
+  saveToString
+  saveToText
+  saveToXML
+  timings
+
+Documentation of geom_data.distanceResults[i].normal: 
+ndarray(shape, dtype=None, buffer=None, offset=0, strides=None, order=None)
+--
+
+ndarray(shape, dtype=float, buffer=None, offset=0, strides=None, order=None)
+
+An array object represents a multidimensional, homogeneous array
+of fixed-size items.  An associated data-type object describes the
+format of each element in the array (its byte-order, how many bytes it
+occupies in memory, whether it is an integer, a floating point number,
+or something else, etc.)
+
+Arrays should be constructed using `array`, `zeros` or `empty` (refer
+to the See Also section below).  The parameters given here refer to
+a low-level method (`ndarray(...)`) for instantiating an array.
+
+For more information, refer to the `numpy` module and examine the
+methods and attributes of an array.
+
+Parameters
+----------
+(for the __new__ method; see Notes below)
+
+shape : tuple of ints
+    Shape of created array.
+dtype : data-type, optional
+    Any object that can be interpreted as a numpy data type.
+    Default is `numpy.float64`.
+buffer : object exposing buffer interface, optional
+    Used to fill the array with data.
+offset : int, optional
+    Offset of array data in buffer.
+strides : tuple of ints, optional
+    Strides of data in memory.
+order : {'C', 'F'}, optional
+    Row-major (C-style) or column-major (Fortran-style) order.
+
+Attributes
+----------
+T : ndarray
+    Transpose of the array.
+data : buffer
+    The array's elements, in memory.
+dtype : dtype object
+    Describes the format of the elements in the array.
+flags : dict
+    Dictionary containing information related to memory use, e.g.,
+    'C_CONTIGUOUS', 'OWNDATA', 'WRITEABLE', etc.
+flat : numpy.flatiter object
+    Flattened version of the array as an iterator.  The iterator
+    allows assignments, e.g., ``x.flat = 3`` (See `ndarray.flat` for
+    assignment examples; TODO).
+imag : ndarray
+    Imaginary part of the array.
+real : ndarray
+    Real part of the array.
+size : int
+    Number of elements in the array.
+itemsize : int
+    The memory use of each array element in bytes.
+nbytes : int
+    The total number of bytes required to store the array data,
+    i.e., ``itemsize * size``.
+ndim : int
+    The array's number of dimensions.
+shape : tuple of ints
+    Shape of the array.
+strides : tuple of ints
+    The step-size required to move from one element to the next in
+    memory. For example, a contiguous ``(3, 4)`` array of type
+    ``int16`` in C-order has strides ``(8, 2)``.  This implies that
+    to move from element to element in memory requires jumps of 2 bytes.
+    To move from row-to-row, one needs to jump 8 bytes at a time
+    (``2 * 4``).
+ctypes : ctypes object
+    Class containing properties of the array needed for interaction
+    with ctypes.
+base : ndarray
+    If the array is a view into another array, that array is its `base`
+    (unless that array is also a view).  The `base` array is where the
+    array data is actually stored.
+
+See Also
+--------
+array : Construct an array.
+zeros : Create an array, each element of which is zero.
+empty : Create an array, but leave its allocated memory unchanged (i.e.,
+        it contains "garbage").
+dtype : Create a data-type.
+numpy.typing.NDArray : An ndarray alias :term:`generic <generic type>`
+                       w.r.t. its `dtype.type <numpy.dtype.type>`.
+
+Notes
+-----
+There are two modes of creating an array using ``__new__``:
+
+1. If `buffer` is None, then only `shape`, `dtype`, and `order`
+   are used.
+2. If `buffer` is an object exposing the buffer interface, then
+   all keywords are interpreted.
+
+No ``__init__`` method is needed because the array is fully initialized
+after the ``__new__`` method.
+
+Examples
+--------
+These examples illustrate the low-level `ndarray` constructor.  Refer
+to the `See Also` section above for easier ways of constructing an
+ndarray.
+
+First mode, `buffer` is None:
+
+>>> import numpy as np
+>>> np.ndarray(shape=(2,2), dtype=float, order='F')
+array([[0.0e+000, 0.0e+000], # random
+       [     nan, 2.5e-323]])
+
+Second mode:
+
+>>> np.ndarray((2,), buffer=np.array([1,2,3]),
+...            offset=np.int_().itemsize,
+...            dtype=int) # offset = 1*itemsize, i.e. skip first element
+array([2, 3])
+
+Attributes of geom_data.oMg[i]:
+  Identity
+  Interpolate
+  Random
+  __array__
+  __class__
+  __copy__
+  __deepcopy__
+  __delattr__
+  __dict__
+  __dir__
+  __doc__
+  __eq__
+  __format__
+  __ge__
+  __getattribute__
+  __getinitargs__
+  __getstate__
+  __gt__
+  __hash__
+  __init__
+  __init_subclass__
+  __instance_size__
+  __invert__
+  __le__
+  __lt__
+  __module__
+  __mul__
+  __ne__
+  __new__
+  __reduce__
+  __reduce_ex__
+  __repr__
+  __safe_for_unpickling__
+  __setattr__
+  __sizeof__
+  __str__
+  __subclasshook__
+  __weakref__
+  act
+  actInv
+  action
+  actionInverse
+  cast
+  copy
+  dualAction
+  homogeneous
+  inverse
+  isApprox
+  isIdentity
+  np
+  rotation
+  setIdentity
+  setRandom
+  toActionMatrix
+  toActionMatrixInverse
+  toDualActionMatrix
+  translation
+
+Pinocchio: 
+  ACCELERATION
+  ADMMContactSolver
+  ARG0
+  ARG1
+  ARG2
+  ARG3
+  ARG4
+  AngleAxis
+  ArgumentPosition
+  BODY
+  BaumgarteCorrectorParameters
+  BroadPhaseManagerPool_coal::DynamicAABBTreeCollisionManager
+  BroadPhaseManager_DynamicAABBTreeArrayCollisionManager
+  BroadPhaseManager_DynamicAABBTreeCollisionManager
+  BroadPhaseManager_IntervalTreeCollisionManager
+  BroadPhaseManager_NaiveCollisionManager
+  BroadPhaseManager_SSaPCollisionManager
+  BroadPhaseManager_SaPCollisionManager
+  COLLISION
+  CachedMeshLoader
+  CollisionCallBackBase
+  CollisionCallBackDefault
+  CollisionGeometry
+  CollisionObject
+  CollisionPair
+  CollisionResult
+  ComputeCollision
+  ComputeDistance
+  Contact
+  ContactCholeskyDecomposition
+  ContactType
+  Convention
+  CoulombFrictionCone
+  Data
+  DelassusCholeskyExpression
+  DelassusOperatorDense
+  DelassusOperatorSparse
+  DistanceResult
+  DualCoulombFrictionCone
+  Exception
+  FIXED_JOINT
+  Force
+  Frame
+  FrameType
+  GeometryData
+  GeometryModel
+  GeometryNoMaterial
+  GeometryObject
+  GeometryPhongMaterial
+  GeometryPool
+  GeometryType
+  Hlog3
+  Inertia
+  JOINT
+  Jexp3
+  Jexp6
+  Jlog3
+  Jlog6
+  JointData
+  JointDataComposite
+  JointDataEllipsoid
+  JointDataFreeFlyer
+  JointDataHX
+  JointDataHY
+  JointDataHZ
+  JointDataHelicalUnaligned
+  JointDataMimic
+  JointDataPX
+  JointDataPY
+  JointDataPZ
+  JointDataPlanar
+  JointDataPrismaticUnaligned
+  JointDataRUBX
+  JointDataRUBY
+  JointDataRUBZ
+  JointDataRX
+  JointDataRY
+  JointDataRZ
+  JointDataRevoluteUnaligned
+  JointDataRevoluteUnboundedUnalignedTpl
+  JointDataSpherical
+  JointDataSphericalZYX
+  JointDataTranslation
+  JointDataUniversal
+  JointModel
+  JointModelComposite
+  JointModelEllipsoid
+  JointModelFreeFlyer
+  JointModelHX
+  JointModelHY
+  JointModelHZ
+  JointModelHelicalUnaligned
+  JointModelMimic
+  JointModelPX
+  JointModelPY
+  JointModelPZ
+  JointModelPlanar
+  JointModelPrismaticUnaligned
+  JointModelRUBX
+  JointModelRUBY
+  JointModelRUBZ
+  JointModelRX
+  JointModelRY
+  JointModelRZ
+  JointModelRevoluteUnaligned
+  JointModelRevoluteUnboundedUnaligned
+  JointModelSpherical
+  JointModelSphericalZYX
+  JointModelTranslation
+  JointModelUniversal
+  KinematicLevel
+  LOCAL
+  LOCAL_WORLD_ALIGNED
+  LanczosDecomposition
+  LieGroup
+  LogCholeskyParameters
+  LogLevel
+  MeshLoader
+  Model
+  ModelPool
+  Motion
+  OP_FRAME
+  PGSContactSolver
+  PINOCCHIO_MAJOR_VERSION
+  PINOCCHIO_MINOR_VERSION
+  PINOCCHIO_PATCH_VERSION
+  POSITION
+  PowerIterationAlgo
+  ProximalSettings
+  PseudoInertia
+  Quaternion
+  ReferenceFrame
+  RigidConstraintData
+  RigidConstraintModel
+  RobotWrapper
+  SE3
+  SE3ToXYZQUAT
+  SE3ToXYZQUATtuple
+  SENSOR
+  ScalarType
+  SolverStats
+  StdMap_String_VectorXd
+  StdVec_Bool
+  StdVec_BroadPhaseManager_coal::DynamicAABBTreeCollisionManager
+  StdVec_CollisionObject
+  StdVec_CollisionPair
+  StdVec_CollisionResult
+  StdVec_ComputeCollision
+  StdVec_ComputeDistance
+  StdVec_Contact
+  StdVec_CoulombFrictionCone
+  StdVec_Data
+  StdVec_DistanceResult
+  StdVec_Double
+  StdVec_DualCoulombFrictionCone
+  StdVec_FCL_CollisionObjectPointer
+  StdVec_Force
+  StdVec_Frame
+  StdVec_GeometryData
+  StdVec_GeometryModel
+  StdVec_GeometryObject
+  StdVec_Index
+  StdVec_IndexVector
+  StdVec_Inertia
+  StdVec_JointDataVector
+  StdVec_JointModelVector
+  StdVec_Matrix6
+  StdVec_Matrix6x
+  StdVec_MatrixXs
+  StdVec_Model
+  StdVec_Motion
+  StdVec_RigidConstraintData
+  StdVec_RigidConstraintModel
+  StdVec_SE3
+  StdVec_Scalar
+  StdVec_StdString
+  StdVec_StdVec_Int
+  StdVec_Symmetric3
+  StdVec_TreeBroadPhaseManager_coal::DynamicAABBTreeCollisionManager
+  StdVec_Vector3
+  StdVec_VectorXb
+  StdVec_int
+  Symmetric3
+  TreeBroadPhaseManagerPool_coal::DynamicAABBTreeCollisionManager
+  TreeBroadPhaseManager_DynamicAABBTreeArrayCollisionManager
+  TreeBroadPhaseManager_DynamicAABBTreeCollisionManager
+  TreeBroadPhaseManager_IntervalTreeCollisionManager
+  TreeBroadPhaseManager_NaiveCollisionManager
+  TreeBroadPhaseManager_SSaPCollisionManager
+  TreeBroadPhaseManager_SaPCollisionManager
+  TridiagonalSymmetricMatrix
+  VELOCITY
+  VISUAL
+  WITH_CPPAD
+  WITH_HPP_FCL
+  WITH_HPP_FCL_BINDINGS
+  WITH_OPENMP
+  WITH_SDFORMAT
+  WITH_URDFDOM
+  WORLD
+  XAxis
+  XYZQUATToSE3
+  YAxis
+  ZAxis
+  __builtins__
+  __cached__
+  __doc__
+  __file__
+  __loader__
+  __name__
+  __package__
+  __path__
+  __raw_version__
+  __spec__
+  __version__
+  aba
+  abaInParallel
+  appendModel
+  bodyRegressor
+  boost_type_index
+  buildGeomFromMJCF
+  buildGeomFromSdf
+  buildGeomFromUrdf
+  buildGeomFromUrdfString
+  buildModelFromMJCF
+  buildModelFromSdf
+  buildModelFromUrdf
+  buildModelFromXML
+  buildModelsFromMJCF
+  buildModelsFromSdf
+  buildModelsFromUrdf
+  buildReducedModel
+  buildSampleGeometryModelHumanoid
+  buildSampleGeometryModelManipulator
+  buildSampleModelHumanoid
+  buildSampleModelHumanoidRandom
+  buildSampleModelManipulator
+  ccrba
+  centerOfMass
+  checkVersionAtLeast
+  cholesky
+  classicAcceleration
+  computeABADerivatives
+  computeAllTerms
+  computeBodyRadius
+  computeCentroidalDynamicsDerivatives
+  computeCentroidalMap
+  computeCentroidalMapTimeVariation
+  computeCentroidalMomentum
+  computeCentroidalMomentumTimeVariation
+  computeCollision
+  computeCollisions
+  computeCollisionsInParallel
+  computeComplementarityShift
+  computeConeProjection
+  computeConstraintDynamicsDerivatives
+  computeContactForces
+  computeCoriolisMatrix
+  computeDampedDelassusMatrixInverse
+  computeDelassusMatrix
+  computeDistance
+  computeDistances
+  computeDualConeProjection
+  computeForwardKinematicsDerivatives
+  computeFrameJacobian
+  computeFrameKinematicRegressor
+  computeGeneralizedGravity
+  computeGeneralizedGravityDerivatives
+  computeImpulseDynamicsDerivatives
+  computeJointJacobian
+  computeJointJacobians
+  computeJointJacobiansTimeVariation
+  computeJointKinematicRegressor
+  computeJointTorqueRegressor
+  computeKKTContactDynamicMatrixInverse
+  computeKineticEnergy
+  computeKineticEnergyRegressor
+  computeMechanicalEnergy
+  computeMinverse
+  computePotentialEnergy
+  computePotentialEnergyRegressor
+  computePrimalFeasibility
+  computeRNEADerivatives
+  computeReprojectionError
+  computeStaticRegressor
+  computeStaticTorque
+  computeStaticTorqueDerivatives
+  computeSubtreeMasses
+  computeSupportedForceByFrame
+  computeSupportedInertiaByFrame
+  computeTotalMass
+  constraintDynamics
+  contactInverseDynamics
+  crba
+  createDatas
+  dDifference
+  dIntegrate
+  dIntegrateTransport
+  dccrba
+  deprecated
+  difference
+  distance
+  exp
+  exp3
+  exp3_quat
+  exp6
+  exp6_quat
+  explog
+  findCommonAncestor
+  forwardDynamics
+  forwardKinematics
+  frameBodyRegressor
+  frameJacobianTimeVariation
+  framesForwardKinematics
+  getAcceleration
+  getCenterOfMassVelocityDerivatives
+  getCentroidalDynamicsDerivatives
+  getClassicalAcceleration
+  getConstraintJacobian
+  getConstraintsJacobian
+  getCoriolisMatrix
+  getFrameAcceleration
+  getFrameAccelerationDerivatives
+  getFrameClassicalAcceleration
+  getFrameJacobian
+  getFrameJacobianTimeVariation
+  getFrameVelocity
+  getFrameVelocityDerivatives
+  getJacobianSubtreeCenterOfMass
+  getJointAccelerationDerivatives
+  getJointJacobian
+  getJointJacobianTimeVariation
+  getJointVelocityDerivatives
+  getKKTContactDynamicMatrixInverse
+  getPointClassicAccelerationDerivatives
+  getPointVelocityDerivatives
+  getVelocity
+  graph
+  hppfcl
+  impulseDynamics
+  initConstraintDynamics
+  inspect
+  integrate
+  interpolate
+  isNormalized
+  isSameConfiguration
+  jacobianCenterOfMass
+  jacobianSubtreeCenterOfMass
+  jointBodyRegressor
+  liegroups
+  linalg
+  loadReferenceConfigurations
+  loadReferenceConfigurationsFromXML
+  loadRotorParameters
+  log
+  log3
+  log6
+  log6_quat
+  map_indexing_suite_StdMap_String_VectorXd_entry
+  module_info
+  neutral
+  nle
+  nonLinearEffects
+  normalize
+  numpy
+  omp_get_max_threads
+  pin
+  pinocchio_pywrap_default
+  printVersion
+  randomConfiguration
+  reachableWorkspace
+  reachableWorkspaceHull
+  reachableWorkspaceWithCollisions
+  reachableWorkspaceWithCollisionsHull
+  removeCollisionPairs
+  removeCollisionPairsFromXML
+  rnea
+  rneaInParallel
+  robot_wrapper
+  rpy
+  seed
+  serialization
+  sharedMemory
+  shortcuts
+  skew
+  skewSquare
+  squaredDistance
+  std_type_index
+  submodules
+  sys
+  transformJointIntoMimic
+  unSkew
+  updateFramePlacement
+  updateFramePlacements
+  updateGeometryPlacements
+  updateGlobalPlacements
+  utils
+
+Documentation of pin.getJointJacobian: 
+
+getJointJacobian( (Model)model, (Data)data, (int)joint_id, (ReferenceFrame)reference_frame) -> numpy.ndarray :
+    Computes the jacobian of a given given joint according to the given entries in data.
+    If reference_frame is set to LOCAL, it returns the Jacobian expressed in the local coordinate system of the joint.
+    If reference_frame is set to LOCAL_WORLD_ALIGNED, it returns the Jacobian expressed in the coordinate system of the frame centered on the joint, but aligned with the WORLD axes.
+    If reference_frame is set to WORLD, it returns the Jacobian expressed in the coordinate system of the frame associated to the WORLD.
+    
+    Parameters:
+    	model: model of the kinematic tree
+    	data: data related to the model
+    	joint_id: index of the joint
+    	reference_frame: reference frame in which the resulting derivatives are expressed
+    
+
+Documentation of pin.computeDistances: 
+
+computeDistances( (GeometryModel)geometry_model, (GeometryData)geometry_data) -> int :
+    Compute the distance between each collision pair for a given GeometryModel and associated GeometryData.
+
+computeDistances( (Model)model, (Data)data, (GeometryModel)geometry_model, (GeometryData)geometry_data, (numpy.ndarray)q) -> int :
+    Update the geometry for a given configuration and compute the distance between each collision pair

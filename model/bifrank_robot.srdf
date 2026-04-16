@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<robot name="bifrank_robot">
+    <disable_collisions link1="lewis_fr3_link0" link2="lewis_fr3_link1" reason="Adjacent" />
+    <disable_collisions link1="lewis_fr3_link1" link2="lewis_fr3_link2" reason="Adjacent" />
+    <disable_collisions link1="lewis_fr3_link2" link2="lewis_fr3_link3" reason="Adjacent" />
+    <disable_collisions link1="lewis_fr3_link3" link2="lewis_fr3_link4" reason="Adjacent" />
+    <disable_collisions link1="lewis_fr3_link4" link2="lewis_fr3_link5" reason="Adjacent" />
+    <disable_collisions link1="lewis_fr3_link5" link2="lewis_fr3_link6" reason="Adjacent" />
+    <disable_collisions link1="lewis_fr3_link6" link2="lewis_fr3_link7" reason="Adjacent" />
+
+    <disable_collisions link1="lewis_fr3_link5" link2="lewis_fr3_link7" reason="NeverTouch" />
+    <disable_collisions link1="lewis_fr3_link1" link2="lewis_fr3_link3" reason="NeverTouch" />
+    <disable_collisions link1="lewis_fr3_link0" link2="lewis_fr3_link2" reason="NeverTouch" />
+
+    <disable_collisions link1="richard_fr3_link0" link2="richard_fr3_link1" reason="Adjacent" />
+    <disable_collisions link1="richard_fr3_link1" link2="richard_fr3_link2" reason="Adjacent" />
+    <disable_collisions link1="richard_fr3_link2" link2="richard_fr3_link3" reason="Adjacent" />
+    <disable_collisions link1="richard_fr3_link3" link2="richard_fr3_link4" reason="Adjacent" />
+    <disable_collisions link1="richard_fr3_link4" link2="richard_fr3_link5" reason="Adjacent" />
+    <disable_collisions link1="richard_fr3_link5" link2="richard_fr3_link6" reason="Adjacent" />
+    <disable_collisions link1="richard_fr3_link6" link2="richard_fr3_link7" reason="Adjacent" />
+
+    <disable_collisions link1="richard_fr3_link5" link2="richard_fr3_link7" reason="NeverTouch" />
+    <disable_collisions link1="richard_fr3_link1" link2="richard_fr3_link3" reason="NeverTouch" />
+    <disable_collisions link1="richard_fr3_link0" link2="richard_fr3_link2" reason="NeverTouch" />
+
+    
+    <disable_collisions link1="base_link" link2="lewis_fr3_link0" reason="Adjacent" />
+    <disable_collisions link1="base_link" link2="richard_fr3_link0" reason="Adjacent" />
+</robot>
