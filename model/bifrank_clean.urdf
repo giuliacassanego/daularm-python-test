@@ -29,9 +29,8 @@
     </visual>
     <collision>
       <geometry>
-				<sphere radius="0.1"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.0 0.2" rpy="0 0 0"></origin>
+        <box size="0.5 0.5 0.1"/>
+      </geometry>
     </collision>
   </link>
   <!-- Fixed joint mounting the left FR3 (renamed “lewis”) to the base -->
@@ -57,12 +56,11 @@
         <mesh filename="package://model/meshes/visual/link0.dae"/>
       </geometry>
     </visual>
-    <collision name="lewis_fr3_link0_collision_sphere1">
-			<geometry>
-				<sphere radius="0.09"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.15 0.23" rpy="0 0 0"></origin>
-		</collision>
+    <collision name="lewis_fr3_link0_collision">
+      <geometry>
+        <mesh filename="package://model/meshes/collision/link0.stl"/>
+      </geometry>
+    </collision>
     <inertial>
       <origin rpy="0.0 0.0 0.0" xyz="-0.0172 0.0004 0.0745"/>
       <mass value="2.3966"/>
@@ -76,29 +74,10 @@
         <mesh filename="package://model/meshes/visual/link1.dae"/>
       </geometry>
     </visual>
-    <collision name="lewis_fr3_link1_collision_sphere1">
+    <collision name="lewis_fr3_link1_collision">
       <geometry>
-				<sphere radius="0.06"></sphere>
-			</geometry>
-			<origin xyz="0.0 -0.08 0.0" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link1_collision_sphere2">
-      <geometry>
-				<sphere radius="0.06"></sphere>
-			</geometry>
-			<origin xyz="0.0 -0.03 0.0" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link1_collision_sphere3">
-      <geometry>
-				<sphere radius="0.06"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.0 -0.12" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link1_collision_sphere4">
-      <geometry>
-				<sphere radius="0.06"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.0 -0.17" rpy="0 0 0"></origin>
+        <mesh filename="package://model/meshes/collision/link1.stl"/>
+      </geometry>
     </collision>
     <inertial>
       <origin rpy="0.0 0.0 0.0" xyz="0.0000004128 -0.0181251324 -0.0386035970"/>
@@ -122,29 +101,10 @@
         <mesh filename="package://model/meshes/visual/link2.dae"/>
       </geometry>
     </visual>
-    <collision name="lewis_fr3_link2_collision_sphere1">
+    <collision name="lewis_fr3_link2_collision">
       <geometry>
-				<sphere radius="0.06"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.0 0.03" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link2_collision_sphere2">
-      <geometry>
-				<sphere radius="0.06"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.0 0.08" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link2_collision_sphere3">
-      <geometry>
-				<sphere radius="0.06"></sphere>
-			</geometry>
-			<origin xyz="0.0 -0.12 0.0" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link2_collision_sphere4">
-      <geometry>
-				<sphere radius="0.06"></sphere>
-			</geometry>
-			<origin xyz="0.0 -0.17 0.0" rpy="0 0 0"></origin>
+        <mesh filename="package://model/meshes/collision/link2.stl"/>
+      </geometry>
     </collision>
     <inertial>
       <origin rpy="0.0 0.0 0.0" xyz="0.0031828864 -0.0743221644 0.0088146084"/>
@@ -168,29 +128,10 @@
         <mesh filename="package://model/meshes/visual/link3.dae"/>
       </geometry>
     </visual>
-    <collision name="lewis_fr3_link3_collision_sphere1">
+    <collision name="lewis_fr3_link3_collision">
       <geometry>
-				<sphere radius="0.06"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.0 -0.1" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link3_collision_sphere2">
-      <geometry>
-				<sphere radius="0.05"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.0 -0.06" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link3_collision_sphere3">
-      <geometry>
-				<sphere radius="0.055"></sphere>
-			</geometry>
-			<origin xyz="0.08 0.06 0.0" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link3_collision_sphere4">
-      <geometry>
-				<sphere radius="0.055"></sphere>
-			</geometry>
-			<origin xyz="0.08 0.02 0.0" rpy="0 0 0"></origin>
+        <mesh filename="package://model/meshes/collision/link3.stl"/>
+      </geometry>
     </collision>
     <inertial>
       <origin rpy="0 0 0" xyz="0.0407015686 -0.0048200565 -0.0289730823"/>
@@ -214,29 +155,10 @@
         <mesh filename="package://model/meshes/visual/link4.dae"/>
       </geometry>
     </visual>
-    <collision name="lewis_fr3_link4_collision_sphere1">
+    <collision name="lewis_fr3_link4_collision">
       <geometry>
-				<sphere radius="0.06"></sphere>
-			</geometry>
-			<origin xyz="-0.08 0.095 0.0" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link4_collision_sphere2">
-      <geometry>
-				<sphere radius="0.055"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.0 0.02" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link4_collision_sphere3">
-      <geometry>
-				<sphere radius="0.055"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.0 0.06" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link4_collision_sphere4">
-      <geometry>
-				<sphere radius="0.055"></sphere>
-			</geometry>
-			<origin xyz="-0.08 0.06 0.0" rpy="0 0 0"></origin>
+        <mesh filename="package://model/meshes/collision/link4.stl"/>
+      </geometry>
     </collision>
     <inertial>
       <origin rpy="0 0 0" xyz="-0.0459100965 0.0630492960 -0.0085187868"/>
@@ -260,77 +182,10 @@
         <mesh filename="package://model/meshes/visual/link5.dae"/>
       </geometry>
     </visual>
-    <collision name="lewis_fr3_link5_collision_sphere1">
+    <collision name="lewis_fr3_link5_collision">
       <geometry>
-				<sphere radius="0.06"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.055 0.0" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link5_collision_sphere2">
-      <geometry>
-				<sphere radius="0.06"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.075 0.0" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link5_collision_sphere3">
-      <geometry>
-				<sphere radius="0.06"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.0 -0.22" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link5_collision_sphere4">
-      <geometry>
-				<sphere radius="0.05"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.05 -0.18" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link5_collision_sphere5">
-      <geometry>
-				<sphere radius="0.025"></sphere>
-			</geometry>
-			<origin xyz="0.01 0.08 -0.14" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link5_collision_sphere6">
-      <geometry>
-				<sphere radius="0.025"></sphere>
-			</geometry>
-			<origin xyz="0.01 0.085 -0.11" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link5_collision_sphere7">
-      <geometry>
-				<sphere radius="0.025"></sphere>
-			</geometry>
-			<origin xyz="0.01 0.09 -0.08" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link5_collision_sphere8">
-      <geometry>
-				<sphere radius="0.025"></sphere>
-			</geometry>
-			<origin xyz="0.01 0.095 -0.05" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link5_collision_sphere9">
-      <geometry>
-				<sphere radius="0.025"></sphere>
-			</geometry>
-			<origin xyz="-0.01 0.08 -0.14" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link5_collision_sphere10">
-      <geometry>
-				<sphere radius="0.025"></sphere>
-			</geometry>
-			<origin xyz="-0.01 0.085 -0.11" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link5_collision_sphere11">
-      <geometry>
-				<sphere radius="0.025"></sphere>
-			</geometry>
-			<origin xyz="-0.01 0.09 -0.08" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link5_collision_sphere12">
-      <geometry>
-				<sphere radius="0.025"></sphere>
-			</geometry>
-			<origin xyz="-0.01 0.095 -0.05" rpy="0 0 0"></origin>
+        <mesh filename="package://model/meshes/collision/link5.stl"/>
+      </geometry>
     </collision>
     <inertial>
       <origin rpy="0.0 0.0 0.0" xyz="-0.0016039605 0.0292536262 -0.0972965990"/>
@@ -354,23 +209,10 @@
         <mesh filename="package://model/meshes/visual/link6.dae"/>
       </geometry>
     </visual>
-    <collision name="lewis_fr3_link6_collision_sphere1">
+    <collision name="lewis_fr3_link6_collision">
       <geometry>
-				<sphere radius="0.05"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.0 0.0" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link6_collision_sphere2">
-      <geometry>
-				<sphere radius="0.05"></sphere>
-			</geometry>
-			<origin xyz="0.08 -0.01 0.0" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link6_collision_sphere3">
-      <geometry>
-				<sphere radius="0.052"></sphere>
-			</geometry>
-			<origin xyz="0.08 0.035 0.0" rpy="0 0 0"></origin>
+        <mesh filename="package://model/meshes/collision/link6.stl"/>
+      </geometry>
     </collision>
     <inertial>
       <origin rpy="0 0 0" xyz="0.0597131221 -0.0410294666 -0.0101692726"/>
@@ -394,35 +236,10 @@
         <mesh filename="package://model/meshes/visual/link7.dae"/>
       </geometry>
     </visual>
-    <collision name="lewis_fr3_link7_collision_sphere1">
+    <collision name="lewis_fr3_link7_collision">
       <geometry>
-				<sphere radius="0.05"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.0 0.07" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link7_collision_sphere2">
-      <geometry>
-				<sphere radius="0.025"></sphere>
-			</geometry>
-			<origin xyz="0.02 0.04 0.08" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link7_collision_sphere3">
-      <geometry>
-				<sphere radius="0.025"></sphere>
-			</geometry>
-			<origin xyz="0.04 0.02 0.08" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link7_collision_sphere4">
-      <geometry>
-				<sphere radius="0.02"></sphere>
-			</geometry>
-			<origin xyz="0.04 0.06 0.085" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="lewis_fr3_link7_collision_sphere5">
-      <geometry>
-				<sphere radius="0.02"></sphere>
-			</geometry>
-			<origin xyz="0.06 0.04 0.085" rpy="0 0 0"></origin>
+        <mesh filename="package://model/meshes/collision/link7.stl"/>
+      </geometry>
     </collision>
     <inertial>
       <origin rpy="0 0 0" xyz="0.0045225817 0.0086261921 -0.0161633251"/>
@@ -831,9 +648,10 @@
         <mesh filename="package://model/meshes/visual/link0.dae"/>
       </geometry>
     </visual>
-    <collision name="richard_fr3_link0_collision_sphere">
-      <origin xyz="0.0 -0.15 0.23" rpy="0 0 0"/>
-      <geometry><sphere radius="0.09"/></geometry>
+    <collision name="richard_fr3_link0_collision">
+      <geometry>
+        <mesh filename="package://model/meshes/collision/link0.stl"/>
+      </geometry>
     </collision>
     <inertial>
       <origin rpy="0.0 0.0 0.0" xyz="-0.0172 0.0004 0.0745"/>
@@ -848,29 +666,10 @@
         <mesh filename="package://model/meshes/visual/link1.dae"/>
       </geometry>
     </visual>
-    <collision name="richard_fr3_link1_collision_sphere1">
+    <collision name="richard_fr3_link1_collision">
       <geometry>
-				<sphere radius="0.06"></sphere>
-			</geometry>
-			<origin xyz="0.0 -0.08 0.0" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link1_collision_sphere2">
-      <geometry>
-				<sphere radius="0.06"></sphere>
-			</geometry>
-			<origin xyz="0.0 -0.03 0.0" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link1_collision_sphere3">
-      <geometry>
-				<sphere radius="0.06"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.0 -0.12" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link1_collision_sphere4">
-      <geometry>
-				<sphere radius="0.06"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.0 -0.17" rpy="0 0 0"></origin>
+        <mesh filename="package://model/meshes/collision/link1.stl"/>
+      </geometry>
     </collision>
     <inertial>
       <origin rpy="0 0 0" xyz="0.0000004128 -0.0181251324 -0.0386035970"/>
@@ -894,29 +693,10 @@
         <mesh filename="package://model/meshes/visual/link2.dae"/>
       </geometry>
     </visual>
-    <collision name="richard_fr3_link2_collision_sphere1">
+    <collision name="richard_fr3_link2_collision">
       <geometry>
-				<sphere radius="0.06"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.0 0.03" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link2_collision_sphere2">
-      <geometry>
-				<sphere radius="0.06"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.0 0.08" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link2_collision_sphere3">
-      <geometry>
-				<sphere radius="0.06"></sphere>
-			</geometry>
-			<origin xyz="0.0 -0.12 0.0" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link2_collision_sphere4">
-      <geometry>
-				<sphere radius="0.06"></sphere>
-			</geometry>
-			<origin xyz="0.0 -0.17 0.0" rpy="0 0 0"></origin>
+        <mesh filename="package://model/meshes/collision/link2.stl"/>
+      </geometry>
     </collision>
     <inertial>
       <origin rpy="0 0 0" xyz="0.0031828864 -0.0743221644 0.0088146084"/>
@@ -940,29 +720,10 @@
         <mesh filename="package://model/meshes/visual/link3.dae"/>
       </geometry>
     </visual>
-    <collision name="richard_fr3_link3_collision_sphere1">
+    <collision name="richard_fr3_link3_collision">
       <geometry>
-				<sphere radius="0.06"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.0 -0.1" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link3_collision_sphere2">
-      <geometry>
-				<sphere radius="0.05"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.0 -0.06" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link3_collision_sphere3">
-      <geometry>
-				<sphere radius="0.055"></sphere>
-			</geometry>
-			<origin xyz="0.08 0.06 0.0" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link3_collision_sphere4">
-      <geometry>
-				<sphere radius="0.055"></sphere>
-			</geometry>
-			<origin xyz="0.08 0.02 0.0" rpy="0 0 0"></origin>
+        <mesh filename="package://model/meshes/collision/link3.stl"/>
+      </geometry>
     </collision>
     <inertial>
       <origin rpy="0 0 0" xyz="0.0407015686 -0.0048200565 -0.0289730823"/>
@@ -986,29 +747,10 @@
         <mesh filename="package://model/meshes/visual/link4.dae"/>
       </geometry>
     </visual>
-    <collision name="richard_fr3_link4_collision_sphere1">
+    <collision name="richard_fr3_link4_collision">
       <geometry>
-				<sphere radius="0.06"></sphere>
-			</geometry>
-			<origin xyz="-0.08 0.095 0.0" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link4_collision_sphere2">
-      <geometry>
-				<sphere radius="0.055"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.0 0.02" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link4_collision_sphere3">
-      <geometry>
-				<sphere radius="0.055"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.0 0.06" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link4_collision_sphere4">
-      <geometry>
-				<sphere radius="0.055"></sphere>
-			</geometry>
-			<origin xyz="-0.08 0.06 0.0" rpy="0 0 0"></origin>
+        <mesh filename="package://model/meshes/collision/link4.stl"/>
+      </geometry>
     </collision>
     <inertial>
       <origin rpy="0 0 0" xyz="-0.0459100965 0.0630492960 -0.0085187868"/>
@@ -1032,77 +774,10 @@
         <mesh filename="package://model/meshes/visual/link5.dae"/>
       </geometry>
     </visual>
-    <collision name="richard_fr3_link5_collision_sphere1">
+    <collision name="richard_fr3_link5_collision">
       <geometry>
-				<sphere radius="0.06"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.055 0.0" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link5_collision_sphere2">
-      <geometry>
-				<sphere radius="0.06"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.075 0.0" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link5_collision_sphere3">
-      <geometry>
-				<sphere radius="0.06"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.0 -0.22" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link5_collision_sphere4">
-      <geometry>
-				<sphere radius="0.05"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.05 -0.18" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link5_collision_sphere5">
-      <geometry>
-				<sphere radius="0.025"></sphere>
-			</geometry>
-			<origin xyz="0.01 0.08 -0.14" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link5_collision_sphere6">
-      <geometry>
-				<sphere radius="0.025"></sphere>
-			</geometry>
-			<origin xyz="0.01 0.085 -0.11" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link5_collision_sphere7">
-      <geometry>
-				<sphere radius="0.025"></sphere>
-			</geometry>
-			<origin xyz="0.01 0.09 -0.08" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link5_collision_sphere8">
-      <geometry>
-				<sphere radius="0.025"></sphere>
-			</geometry>
-			<origin xyz="0.01 0.095 -0.05" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link5_collision_sphere9">
-      <geometry>
-				<sphere radius="0.025"></sphere>
-			</geometry>
-			<origin xyz="-0.01 0.08 -0.14" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link5_collision_sphere10">
-      <geometry>
-				<sphere radius="0.025"></sphere>
-			</geometry>
-			<origin xyz="-0.01 0.085 -0.11" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link5_collision_sphere11">
-      <geometry>
-				<sphere radius="0.025"></sphere>
-			</geometry>
-			<origin xyz="-0.01 0.09 -0.08" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link5_collision_sphere12">
-      <geometry>
-				<sphere radius="0.025"></sphere>
-			</geometry>
-			<origin xyz="-0.01 0.095 -0.05" rpy="0 0 0"></origin>
+        <mesh filename="package://model/meshes/collision/link5.stl"/>
+      </geometry>
     </collision>
     <inertial>
       <origin rpy="0 0 0" xyz="-0.0016039605 0.0292536262 -0.0972965990"/>
@@ -1126,23 +801,10 @@
         <mesh filename="package://model/meshes/visual/link6.dae"/>
       </geometry>
     </visual>
-    <collision name="richard_fr3_link6_collision_sphere1">
+    <collision name="richard_fr3_link6_collision">
       <geometry>
-				<sphere radius="0.05"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.0 0.0" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link6_collision_sphere2">
-      <geometry>
-				<sphere radius="0.05"></sphere>
-			</geometry>
-			<origin xyz="0.08 -0.01 0.0" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link6_collision_sphere3">
-      <geometry>
-				<sphere radius="0.052"></sphere>
-			</geometry>
-			<origin xyz="0.08 0.035 0.0" rpy="0 0 0"></origin>
+        <mesh filename="package://model/meshes/collision/link6.stl"/>
+      </geometry>
     </collision>
     <inertial>
       <origin rpy="0 0 0" xyz="0.0597131221 -0.0410294666 -0.0101692726"/>
@@ -1166,35 +828,10 @@
         <mesh filename="package://model/meshes/visual/link7.dae"/>
       </geometry>
     </visual>
-    <collision name="richard_fr3_link7_collision_sphere1">
+    <collision name="richard_fr3_link7_collision">
       <geometry>
-				<sphere radius="0.05"></sphere>
-			</geometry>
-			<origin xyz="0.0 0.0 0.07" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link7_collision_sphere2">
-      <geometry>
-				<sphere radius="0.025"></sphere>
-			</geometry>
-			<origin xyz="0.02 0.04 0.08" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link7_collision_sphere3">
-      <geometry>
-				<sphere radius="0.025"></sphere>
-			</geometry>
-			<origin xyz="0.04 0.02 0.08" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link7_collision_sphere4">
-      <geometry>
-				<sphere radius="0.02"></sphere>
-			</geometry>
-			<origin xyz="0.04 0.06 0.085" rpy="0 0 0"></origin>
-    </collision>
-    <collision name="richard_fr3_link7_collision_sphere5">
-      <geometry>
-				<sphere radius="0.02"></sphere>
-			</geometry>
-			<origin xyz="0.06 0.04 0.085" rpy="0 0 0"></origin>
+        <mesh filename="package://model/meshes/collision/link7.stl"/>
+      </geometry>
     </collision>
     <inertial>
       <origin rpy="0 0 0" xyz="0.0045225817 0.0086261921 -0.0161633251"/>

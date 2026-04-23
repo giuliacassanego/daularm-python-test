@@ -30,6 +30,14 @@ pin.removeCollisionPairs(model, geom_model, srdf_path)
 geom_data = geom_model.createData()
 print(f"Number of collision pairs after SRDF filtering: {len(geom_model.collisionPairs)}")
 
+file_out = open("collision_pairs.txt", "w")
+file_out.write("Collision Pairs (after SRDF filtering):\n")
+for i, pair in enumerate(geom_model.collisionPairs):
+    obj1 = geom_model.geometryObjects[pair.first].name
+    obj2 = geom_model.geometryObjects[pair.second].name
+    file_out.write(f"Pair {i}: {obj1} <-> {obj2}\n")
+file_out.close()
+
 import mujoco
 import mujoco.viewer
 
@@ -135,7 +143,6 @@ def desired_trajectory(t):
         ddq_des = np.zeros_like(q0)
     return q_des, dq_des, ddq_des
 
-# TODO: check function
 def repulsive_force_quadratic(d, d_start, F_max):
     if d < d_start:
         # formula (15)
@@ -153,7 +160,7 @@ def repulsive_force_linear(d, d_start, F_max):
 
 DT = model_mj.opt.timestep
 print("Simulation timestep (DT):", DT)
-sim_time = 10.0
+sim_time = 2.0
 steps = int(sim_time / DT)
 
 log_t = []
@@ -252,7 +259,8 @@ for k in range(steps):
             # apply avoidance torque
             # force direction: from p2 to p1 (normal)
             normal = res.normal
-            force_mag = repulsive_force_linear(dist, d_start, F_max = 5) # TODO: tune F_max, try linear and quadratic
+            force_mag = repulsive_force_linear(dist, d_start, F_max = 3) # TODO: tune F_max, try linear and quadratic
+            # force_mag = repulsive_force_quadratic(dist, d_start, F_max = 3) # TODO: tune F_max
             force_vec = force_mag * normal
             # relative jacobian (J1 - J2) but only linear part (top 3 rows) since we want a force, not a torque
             J_rel = Jp1[0:3, :] - Jp2[0:3, :]
@@ -298,7 +306,7 @@ for k in range(steps):
     # Compute torque from Pinocchio impedance
     tau_impedance = impedance_control(q, dq, q_des, dq_des, ddq_des, M, nle)
 
-    tau_tot = tau_impedance + tau_collision
+    tau_tot = tau_impedance #+ tau_collision
 
     # Apply to Mujoco
     data_mj.ctrl[:] = tau_tot
@@ -329,9 +337,7 @@ print(f"Desired Joint Positions:\n{q_goal}")
 # print(f"Final Left EE Position:\n{log_left_ee_pos[-1]}")
 # print(f"Final Right EE Position:\n{log_right_ee_pos[-1]}")
 
-log_coll_dist_array = np.array(log_coll_dist)
-print(f" Number of collision pairs handled: {len(log_coll_dist_array)}")
-np.savetxt("coll_distances.txt", log_coll_dist_array, fmt='%.6f', header="Collision Distance (meters)")
+print(f" Number of collision pairs handled: {len(collision_log)}")
 
 file_out = open("jacobians.txt", "w")
 # file_out.write("Jacobian at point1 for each collision pair:\n")
@@ -345,7 +351,7 @@ for entry in collision_log:
     file_out.write(f"t={entry['t']:.4f}s | pair {entry['pair_idx']}: "
                    f"{entry['obj1']} <-> {entry['obj2']} | dist={entry['dist']:.4f}m\n")
     file_out.write(f"  Point1: {entry['point1']}\n")
-    file_out.write(f"  Point2: {entry['point2']}\n")
-    file_out.write(f"  J1:\n{entry['J1']}\n")
-    file_out.write(f"  J2:\n{entry['J2']}\n\n")
+    file_out.write(f"  Point2: {entry['point2']}\n\n")
+    # file_out.write(f"  J1:\n{entry['J1']}\n")
+    # file_out.write(f"  J2:\n{entry['J2']}\n\n")
 file_out.close()

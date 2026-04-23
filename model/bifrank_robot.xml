@@ -60,45 +60,58 @@
         <joint name="base_joint" axis="0 0 1" limited="true" range="-1.57 1.57" actuatorfrcrange="-10 10" damping="40" />
         <geom name="base_visual" type="box" size="0.25 0.25 0.05" material="red" class="visualgeom" pos="0 0.0 0.05" />
         <geom type="box" size="0.25 0.25 0.05" material="red" class="collision" pos="0 0.0 0.05" />
+        <!-- Add the spheres -->
+        <geom type="sphere" size="0.1" pos="0.0 0.0 0.2"
+          contype="1" conaffinity="1" group="4"
+          rgba="0 0.5 1 0.3" name="base_link_collision_sphere1"/>
         <geom name="lewis_fr3_link0_visual" pos="0 0.1 0.2" mesh="link0_visual" class="visualgeom" quat="0.897282 -0.426082 0.111826 -0.02887"/>
         <geom name="lewis_fr3_link0_collision" pos="0 0.1 0.2" mesh="link0_visual" class="collision" quat="0.897282 -0.426082 0.111826 -0.02887"/>
         <!-- Add the spheres -->
-        <geom type="sphere" size="0.09" pos="-0.012 0.13 0.22"
+        <geom type="sphere" size="0.09" pos="0.0 0.15 0.23"
           contype="1" conaffinity="1" group="4"
           rgba="0 0.5 1 0.3" name="lewis_fr3_link0_collision_sphere1"/>
-        <geom type="sphere" size="0.08" pos="0.02 0.2 0.27"
-          contype="1" conaffinity="1" group="4"
-          rgba="0 0.5 1 0.3" name="lewis_fr3_link0_collision_sphere2"/>
         <geom name="richard_fr3_link0_visual" pos="0 -0.1 0.2" mesh="link0_visual" class="visualgeom" quat="0.897282 0.426082 0.111826 0.02887"/>
         <geom name="richard_fr3_link0_collision" pos="0 -0.1 0.2" mesh="link0_visual" class="collision" quat="0.897282 0.426082 0.111826 0.02887" />
         <!-- Add the spheres -->
-        <geom type="sphere" size="0.09" pos="-0.012 -0.13 0.22"
+        <geom type="sphere" size="0.09" pos="0.0 -0.15 0.23"
               contype="1" conaffinity="1" group="4"
               rgba="0 0.5 1 0.3" name="richard_fr3_link0_collision_sphere1"/>  
-        <geom type="sphere" size="0.08" pos="0.02 -0.2 0.27"
-          contype="1" conaffinity="1" group="4"
-          rgba="0 0.5 1 0.3" name="richard_fr3_link0_collision_sphere2"/>  
         <body name="lewis_fr3_link1" pos="0.0750187 0.352472 0.403762" quat="0.897282 -0.426082 0.111826 -0.02887" >
           <inertial pos="4.128e-07 -0.0181251 -0.0386036" quat="0.998098 -0.0605364 0.00380499 0.0110109" mass="2.927465" diaginertia="0.0239286 0.0227246 0.00610634" />
           <joint name="lewis_fr3_joint1" pos="0 0 0" axis="0 0 1" range="-2.7437 2.7437" actuatorfrcrange="-87 87" damping="0.003" frictionloss="0.2" />
           <geom name="lewis_fr3_link1_visual" mesh="link1_visual" class="visualgeom" />
           <geom name="lewis_fr3_link1_collision" mesh="link1_collision" class="collision" />
           <!-- Add the spheres -->
-          <geom type="sphere" size="0.07" pos="0 -0.01 -0.1"
+          <geom type="sphere" size="0.06" pos="0 -0.08 0"
                 contype="1" conaffinity="1" group="4"
                 rgba="0 0.5 1 0.3" name="lewis_fr3_link1_collision_sphere1"/>
-          <geom type="sphere" size="0.081" pos="0 -0.05 -0.003"
+          <geom type="sphere" size="0.06" pos="0.0 -0.03 0.0"
                 contype="1" conaffinity="1" group="4"
                 rgba="0 0.5 1 0.3" name="lewis_fr3_link1_collision_sphere2"/>
+          <geom type="sphere" size="0.06" pos="0.0 0.0 -0.12"
+                contype="1" conaffinity="1" group="4"
+                rgba="0 0.5 1 0.3" name="lewis_fr3_link1_collision_sphere3"/>
+          <geom type="sphere" size="0.06" pos="0.0 0.0 -0.17"
+                contype="1" conaffinity="1" group="4"
+                rgba="0 0.5 1 0.3" name="lewis_fr3_link1_collision_sphere4"/>
           <body name="lewis_fr3_link2" quat="0.707107 -0.707107 0 0">
             <inertial pos="0.00318289 -0.0743222 0.00881461" quat="0.502599 0.584437 -0.465998 0.434366" mass="2.93554" diaginertia="0.0629567 0.0411924 0.0246371" />
             <joint name="lewis_fr3_joint2" pos="0 0 0" axis="0 0 1" range="-1.7837 1.7837" actuatorfrcrange="-87 87" damping="0.003" frictionloss="0.2" />
             <geom name="lewis_fr3_link2_visual" mesh="link2_visual" class="visualgeom" />
             <geom name="lewis_fr3_link2_collision" mesh="link2_collision" class="collision" />
             <!-- Add the spheres -->
-            <!-- <geom type="sphere" size="0.07" pos="0 0 0"
+            <geom type="sphere" size="0.06" pos="0.0 0.0 0.03"
                 contype="1" conaffinity="1" group="4"
-                rgba="0 0.5 1 0.3" name="lewis_fr3_link2_collision_sphere"/> -->
+                rgba="0 0.5 1 0.3" name="lewis_fr3_link2_collision_sphere1"/>
+            <geom type="sphere" size="0.06" pos="0.0 0.0 0.08"
+                contype="1" conaffinity="1" group="4"
+                rgba="0 0.5 1 0.3" name="lewis_fr3_link2_collision_sphere2"/>
+            <geom type="sphere" size="0.06" pos="0.0 -0.12 0.0"
+                contype="1" conaffinity="1" group="4"
+                rgba="0 0.5 1 0.3" name="lewis_fr3_link2_collision_sphere3"/>
+            <geom type="sphere" size="0.06" pos="0.0 -0.17 0.0"
+                contype="1" conaffinity="1" group="4"
+                rgba="0 0.5 1 0.3" name="lewis_fr3_link2_collision_sphere4"/>
             <body name="lewis_fr3_link3" pos="0 -0.316 0" quat="0.707107 0.707107 0 0">
               <inertial pos="0.0407016 -0.00482006 -0.0289731" quat="0.921025 -0.244161 0.155272 0.260745" mass="2.2449" diaginertia="0.0267409 0.0189869 0.0171587" />
               <joint name="lewis_fr3_joint3" pos="0 0 0" axis="0 0 1" range="-2.9007 2.9007" actuatorfrcrange="-87 87" damping="0.003" frictionloss="0.2" />
@@ -106,57 +119,114 @@
               <geom name="lewis_fr3_link3_collision" mesh="link3_collision" class="collision" />
               <!--geom type="mesh" rgba="" mesh="link3_collision" /-->
               <!-- Add the spheres -->
-              <!-- <geom type="sphere" size="0.06" pos="0 0 -0.12"
+              <geom type="sphere" size="0.06" pos="0.0 0.0 -0.1"
                 contype="1" conaffinity="1" group="4"
                 rgba="0 0.5 1 0.3" name="lewis_fr3_link3_collision_sphere1"/>
-              <geom type="sphere" size="0.06" pos="0 0 -0.06"
+              <geom type="sphere" size="0.05" pos="0.0 0.0 -0.06"
                 contype="1" conaffinity="1" group="4"
                 rgba="0 0.5 1 0.3" name="lewis_fr3_link3_collision_sphere2"/>
-              <geom type="sphere" size="0.06" pos="0 0 0"
+              <geom type="sphere" size="0.055" pos="0.08 0.06 0.0"
                 contype="1" conaffinity="1" group="4"
-                rgba="0 0.5 1 0.3" name="lewis_fr3_link3_collision_sphere3"/> -->
+                rgba="0 0.5 1 0.3" name="lewis_fr3_link3_collision_sphere3"/>
+              <geom type="sphere" size="0.055" pos="0.08 0.02 0.0"
+                contype="1" conaffinity="1" group="4"
+                rgba="0 0.5 1 0.3" name="lewis_fr3_link3_collision_sphere4"/>
               <body name="lewis_fr3_link4" pos="0.0825 0 0" quat="0.707107 0.707107 0 0">
                 <inertial pos="-0.0459101 0.0630493 -0.00851879" quat="0.438018 0.803311 0.00937812 0.403414" mass="2.6156" diaginertia="0.05139 0.0372717 0.0160047" />
                 <joint name="lewis_fr3_joint4" pos="0 0 0" axis="0 0 1" range="-3.0421 -0.1518" actuatorfrcrange="-87 87" damping="0.003" frictionloss="0.2" />
                 <geom name="lewis_fr3_link4_visual" mesh="link4_visual" class="visualgeom" />
                 <geom name="lewis_fr3_link4_collision" mesh="link4_collision" class="collision" />
                 <!-- Add the spheres -->
-                <!-- <geom type="sphere" size="0.06" pos="-0.03 0.05 0"
+                <geom type="sphere" size="0.06" pos="-0.08 0.095 0.0"
                   contype="1" conaffinity="1" group="4"
                   rgba="0 0.5 1 0.3" name="lewis_fr3_link4_collision_sphere1"/>
-                <geom type="sphere" size="0.06" pos="0 0 0"
+                <geom type="sphere" size="0.055" pos="0.0 0.0 0.02"
                   contype="1" conaffinity="1" group="4"
-                  rgba="0 0.5 1 0.3" name="lewis_fr3_link4_collision_sphere2"/> -->
+                  rgba="0 0.5 1 0.3" name="lewis_fr3_link4_collision_sphere2"/>
+                <geom type="sphere" size="0.055" pos="0.0 0.0 0.06"
+                  contype="1" conaffinity="1" group="4"
+                  rgba="0 0.5 1 0.3" name="lewis_fr3_link4_collision_sphere3"/>
+                <geom type="sphere" size="0.055" pos="-0.08 0.06 0.0"
+                  contype="1" conaffinity="1" group="4"
+                  rgba="0 0.5 1 0.3" name="lewis_fr3_link4_collision_sphere4"/>
                 <body name="lewis_fr3_link5" pos="-0.0825 0.384 0" quat="0.707107 -0.707107 0 0">
                   <inertial pos="-0.00160396 0.0292536 -0.0972966" quat="0.919031 0.125604 0.0751531 -0.366003" mass="2.32712" diaginertia="0.0579335 0.0449144 0.0130634" />
                   <joint name="lewis_fr3_joint5" pos="0 0 0" axis="0 0 1" range="-2.8065 2.8065" actuatorfrcrange="-12 12" damping="0.003" frictionloss="0.2" />
                   <geom name="lewis_fr3_link5_visual" mesh="link5_visual" class="visualgeom" />
                   <geom name="lewis_fr3_link5_collision" mesh="link5_collision" class="collision" />
                   <!-- Add the spheres -->
-                  <!-- <geom type="sphere" size="0.06" pos="0 0 -0.2"
+                  <geom type="sphere" size="0.06" pos="0.0 0.055 0.0"
                     contype="1" conaffinity="1" group="4"
                     rgba="0 0.5 1 0.3" name="lewis_fr3_link5_collision_sphere1"/>
-                  <geom type="sphere" size="0.06" pos="0 0 -0.1"
+                  <geom type="sphere" size="0.06" pos="0.0 0.075 0.0"
                     contype="1" conaffinity="1" group="4"
-                    rgba="0 0.5 1 0.3" name="lewis_fr3_link5_collision_sphere2"/> -->
+                    rgba="0 0.5 1 0.3" name="lewis_fr3_link5_collision_sphere2"/>
+                  <geom type="sphere" size="0.06" pos="0.0 0.0 -0.22"
+                    contype="1" conaffinity="1" group="4"
+                    rgba="0 0.5 1 0.3" name="lewis_fr3_link5_collision_sphere3"/>
+                  <geom type="sphere" size="0.05" pos="0.0 0.05 -0.18"
+                    contype="1" conaffinity="1" group="4"
+                    rgba="0 0.5 1 0.3" name="lewis_fr3_link5_collision_sphere4"/>
+                  <geom type="sphere" size="0.025" pos="0.01 0.08 -0.14"
+                    contype="1" conaffinity="1" group="4"
+                    rgba="0 0.5 1 0.3" name="lewis_fr3_link5_collision_sphere5"/>
+                  <geom type="sphere" size="0.025" pos="0.01 0.085 -0.11"
+                    contype="1" conaffinity="1" group="4"
+                    rgba="0 0.5 1 0.3" name="lewis_fr3_link5_collision_sphere6"/>
+                  <geom type="sphere" size="0.025" pos="0.01 0.09 -0.08"
+                    contype="1" conaffinity="1" group="4"
+                    rgba="0 0.5 1 0.3" name="lewis_fr3_link5_collision_sphere7"/>
+                  <geom type="sphere" size="0.025" pos="0.01 0.095 -0.05"
+                    contype="1" conaffinity="1" group="4"
+                    rgba="0 0.5 1 0.3" name="lewis_fr3_link5_collision_sphere8"/>
+                  <geom type="sphere" size="0.025" pos="-0.01 0.08 -0.14"
+                    contype="1" conaffinity="1" group="4"
+                    rgba="0 0.5 1 0.3" name="lewis_fr3_link5_collision_sphere9"/>
+                  <geom type="sphere" size="0.025" pos="-0.01 0.085 -0.11"
+                    contype="1" conaffinity="1" group="4"
+                    rgba="0 0.5 1 0.3" name="lewis_fr3_link5_collision_sphere10"/>
+                  <geom type="sphere" size="0.025" pos="-0.01 0.09 -0.08"
+                    contype="1" conaffinity="1" group="4"
+                    rgba="0 0.5 1 0.3" name="lewis_fr3_link5_collision_sphere11"/>
+                  <geom type="sphere" size="0.025" pos="-0.01 0.095 -0.05"
+                    contype="1" conaffinity="1" group="4"
+                    rgba="0 0.5 1 0.3" name="lewis_fr3_link5_collision_sphere12"/> 
                   <body name="lewis_fr3_link6" quat="0.707107 0.707107 0 0">
                     <inertial pos="0.0597131 -0.0410295 -0.0101693" quat="0.621301 0.552665 0.510011 0.220081" mass="1.81704" diaginertia="0.0175039 0.0161123 0.00193529" />
                     <joint name="lewis_fr3_joint6" pos="0 0 0" axis="0 0 1" range="0.5445 4.5169" actuatorfrcrange="-12 12" damping="0.003" frictionloss="0.2" />
                     <geom name="lewis_fr3_link6_visual" mesh="link6_visual" class="visualgeom" />
                     <geom name="lewis_fr3_link6_collision" mesh="link6_collision"  class="collision" />
                     <!-- Add the spheres -->
-                    <!-- <geom type="sphere" size="0.05" pos="0 0 0"
+                    <geom type="sphere" size="0.05" pos="0.0 0.0 0.0"
                       contype="1" conaffinity="1" group="4"
-                      rgba="0 0.5 1 0.3" name="lewis_fr3_link6_collision_sphere"/> -->
+                      rgba="0 0.5 1 0.3" name="lewis_fr3_link6_collision_sphere1"/>
+                    <geom type="sphere" size="0.05" pos="0.08 -0.01 0.0"
+                      contype="1" conaffinity="1" group="4"
+                      rgba="0 0.5 1 0.3" name="lewis_fr3_link6_collision_sphere2"/>
+                    <geom type="sphere" size="0.052" pos="0.08 0.035 0.0"
+                      contype="1" conaffinity="1" group="4"
+                      rgba="0 0.5 1 0.3" name="lewis_fr3_link6_collision_sphere3"/>
                     <body name="lewis_fr3_link7" pos="0.088 0 0" quat="0.707107 0.707107 0 0">
                       <inertial pos="0.00452258 0.00862619 -0.0161633" quat="0.727579 0.0978688 -0.24906 0.63168" mass="0.627143" diaginertia="0.000223836 0.000223642 5.64132e-07" />
                       <joint name="lewis_fr3_joint7" pos="0 0 0" axis="0 0 1" range="-3.0159 3.0159" actuatorfrcrange="-12 12" damping="0.003" frictionloss="0.2" />
                       <geom name="lewis_fr3_link7_visual" mesh="link7_visual" class="visualgeom" />
                       <geom name="lewis_fr3_link7_collision" mesh="link7_collision" class="collision" />
                       <!-- Add the spheres -->
-                      <!-- <geom type="sphere" size="0.04" pos="0 0 -0.05"
+                      <geom type="sphere" size="0.05" pos="0.0 0.0 0.07"
                         contype="1" conaffinity="1" group="4"
-                        rgba="0 0.5 1 0.3" name="lewis_fr3_link7_collision_sphere"/> -->
+                        rgba="0 0.5 1 0.3" name="lewis_fr3_link7_collision_sphere1"/>
+                      <geom type="sphere" size="0.025" pos="0.02 0.04 0.08"
+                        contype="1" conaffinity="1" group="4"
+                        rgba="0 0.5 1 0.3" name="lewis_fr3_link7_collision_sphere2"/>
+                      <geom type="sphere" size="0.025" pos="0.04 0.02 0.08"
+                        contype="1" conaffinity="1" group="4"
+                        rgba="0 0.5 1 0.3" name="lewis_fr3_link7_collision_sphere3"/>
+                      <geom type="sphere" size="0.02" pos="0.04 0.06 0.085"
+                        contype="1" conaffinity="1" group="4"
+                        rgba="0 0.5 1 0.3" name="lewis_fr3_link7_collision_sphere4"/>
+                      <geom type="sphere" size="0.02" pos="0.06 0.04 0.085"
+                        contype="1" conaffinity="1" group="4"
+                        rgba="0 0.5 1 0.3" name="lewis_fr3_link7_collision_sphere5"/>
                     </body>
                   </body>
                 </body>
@@ -170,30 +240,129 @@
           <joint name="richard_fr3_joint1" pos="0 0 0" axis="0 0 1" range="-2.7437 2.7437" actuatorfrcrange="-87 87" damping="0.003" frictionloss="0.2" />
           <geom name="richard_fr3_link1_visual"  mesh="link1_visual" class="visualgeom" />
           <geom name="richard_fr3_link1_collision" mesh="link1_collision" class="collision" />
+          <!-- Add the spheres -->
+          <geom type="sphere" size="0.06" pos="0 -0.08 0"
+                contype="1" conaffinity="1" group="4"
+                rgba="0 0.5 1 0.3" name="richard_fr3_link1_collision_sphere1"/>
+          <geom type="sphere" size="0.06" pos="0.0 -0.03 0.0"
+                contype="1" conaffinity="1" group="4"
+                rgba="0 0.5 1 0.3" name="richard_fr3_link1_collision_sphere2"/>
+          <geom type="sphere" size="0.06" pos="0.0 0.0 -0.12"
+                contype="1" conaffinity="1" group="4"
+                rgba="0 0.5 1 0.3" name="richard_fr3_link1_collision_sphere3"/>
+          <geom type="sphere" size="0.06" pos="0.0 0.0 -0.17"
+                contype="1" conaffinity="1" group="4"
+                rgba="0 0.5 1 0.3" name="richard_fr3_link1_collision_sphere4"/>
           <body name="richard_fr3_link2" quat="0.707107 -0.707107 0 0">
             <inertial pos="0.00318289 -0.0743222 0.00881461" quat="0.502599 0.584437 -0.465998 0.434366" mass="2.93554" diaginertia="0.0629567 0.0411924 0.0246371" />
             <joint name="richard_fr3_joint2" pos="0 0 0" axis="0 0 1" range="-1.7837 1.7837" actuatorfrcrange="-87 87" damping="0.003" frictionloss="0.2" />
             <geom name="richard_fr3_link2_visual"  mesh="link2_visual" class="visualgeom" />
             <geom name="richard_fr3_link2_collision" type="mesh" mesh="link2_collision"  class="collision" />
+            <!-- Add the spheres -->
+            <geom type="sphere" size="0.06" pos="0.0 0.0 0.03"
+                contype="1" conaffinity="1" group="4"
+                rgba="0 0.5 1 0.3" name="richard_fr3_link2_collision_sphere1"/>
+            <geom type="sphere" size="0.06" pos="0.0 0.0 0.08"
+                contype="1" conaffinity="1" group="4"
+                rgba="0 0.5 1 0.3" name="richard_fr3_link2_collision_sphere2"/>
+            <geom type="sphere" size="0.06" pos="0.0 -0.12 0.0"
+                contype="1" conaffinity="1" group="4"
+                rgba="0 0.5 1 0.3" name="richard_fr3_link2_collision_sphere3"/>
+            <geom type="sphere" size="0.06" pos="0.0 -0.17 0.0"
+                contype="1" conaffinity="1" group="4"
+                rgba="0 0.5 1 0.3" name="richard_fr3_link2_collision_sphere4"/>
             <body name="richard_fr3_link3" pos="0 -0.316 0" quat="0.707107 0.707107 0 0">
               <inertial pos="0.0407016 -0.00482006 -0.0289731" quat="0.921025 -0.244161 0.155272 0.260745" mass="2.2449" diaginertia="0.0267409 0.0189869 0.0171587" />
               <joint name="richard_fr3_joint3" pos="0 0 0" axis="0 0 1" range="-2.9007 2.9007" actuatorfrcrange="-87 87" damping="0.003" frictionloss="0.2" />
               <geom name="richard_fr3_link3_visual"  mesh="link3_visual" class="visualgeom" />
               <geom name="richard_fr3_link3_collision" type="mesh" mesh="link3_collision"  class="collision" />
+              <!-- Add the spheres -->
+              <geom type="sphere" size="0.06" pos="0.0 0.0 -0.1"
+                contype="1" conaffinity="1" group="4"
+                rgba="0 0.5 1 0.3" name="richard_fr3_link3_collision_sphere1"/>
+              <geom type="sphere" size="0.05" pos="0.0 0.0 -0.06"
+                contype="1" conaffinity="1" group="4"
+                rgba="0 0.5 1 0.3" name="richard_fr3_link3_collision_sphere2"/>
+              <geom type="sphere" size="0.055" pos="0.08 0.06 0.0"
+                contype="1" conaffinity="1" group="4"
+                rgba="0 0.5 1 0.3" name="richard_fr3_link3_collision_sphere3"/>
+              <geom type="sphere" size="0.055" pos="0.08 0.02 0.0"
+                contype="1" conaffinity="1" group="4"
+                rgba="0 0.5 1 0.3" name="richard_fr3_link3_collision_sphere4"/>
               <body name="richard_fr3_link4" pos="0.0825 0 0" quat="0.707107 0.707107 0 0">
                 <inertial pos="-0.0459101 0.0630493 -0.00851879" quat="0.438018 0.803311 0.00937812 0.403414" mass="2.6156" diaginertia="0.05139 0.0372717 0.0160047" />
                 <joint name="richard_fr3_joint4" pos="0 0 0" axis="0 0 1" range="-3.0421 -0.1518" actuatorfrcrange="-87 87" damping="0.003" frictionloss="0.2" />
                 <geom name="richard_fr3_link4_visual"  mesh="link4_visual" class="visualgeom" />
                 <geom name="richard_fr3_link4_collision" type="mesh" mesh="link4_collision"  class="collision" />
+                <!-- Add the spheres -->
+                <geom type="sphere" size="0.06" pos="-0.08 0.095 0.0"
+                  contype="1" conaffinity="1" group="4"
+                  rgba="0 0.5 1 0.3" name="richard_fr3_link4_collision_sphere1"/>
+                <geom type="sphere" size="0.055" pos="0.0 0.0 0.02"
+                  contype="1" conaffinity="1" group="4"
+                  rgba="0 0.5 1 0.3" name="richard_fr3_link4_collision_sphere2"/>
+                <geom type="sphere" size="0.055" pos="0.0 0.0 0.06"
+                  contype="1" conaffinity="1" group="4"
+                  rgba="0 0.5 1 0.3" name="richard_fr3_link4_collision_sphere3"/>
+                <geom type="sphere" size="0.055" pos="-0.08 0.06 0.0"
+                  contype="1" conaffinity="1" group="4"
+                  rgba="0 0.5 1 0.3" name="richard_fr3_link4_collision_sphere4"/>
                 <body name="richard_fr3_link5" pos="-0.0825 0.384 0" quat="0.707107 -0.707107 0 0">
                   <inertial pos="-0.00160396 0.0292536 -0.0972966" quat="0.919031 0.125604 0.0751531 -0.366003" mass="2.32712" diaginertia="0.0579335 0.0449144 0.0130634" />
                   <joint name="richard_fr3_joint5" pos="0 0 0" axis="0 0 1" range="-2.8065 2.8065" actuatorfrcrange="-12 12" damping="0.003" frictionloss="0.2" />
                   <geom name="richard_fr3_link5_visual"  mesh="link5_visual" class="visualgeom" />
                   <geom name="richard_fr3_link5_collision" type="mesh" mesh="link5_collision"  class="collision" />
+                  <!-- Add the spheres -->
+                  <geom type="sphere" size="0.06" pos="0.0 0.055 0.0"
+                    contype="1" conaffinity="1" group="4"
+                    rgba="0 0.5 1 0.3" name="richard_fr3_link5_collision_sphere1"/>
+                  <geom type="sphere" size="0.06" pos="0.0 0.075 0.0"
+                    contype="1" conaffinity="1" group="4"
+                    rgba="0 0.5 1 0.3" name="richard_fr3_link5_collision_sphere2"/>
+                  <geom type="sphere" size="0.06" pos="0.0 0.0 -0.22"
+                    contype="1" conaffinity="1" group="4"
+                    rgba="0 0.5 1 0.3" name="richard_fr3_link5_collision_sphere3"/>
+                  <geom type="sphere" size="0.05" pos="0.0 0.05 -0.18"
+                    contype="1" conaffinity="1" group="4"
+                    rgba="0 0.5 1 0.3" name="richard_fr3_link5_collision_sphere4"/>
+                  <geom type="sphere" size="0.025" pos="0.01 0.08 -0.14"
+                    contype="1" conaffinity="1" group="4"
+                    rgba="0 0.5 1 0.3" name="richard_fr3_link5_collision_sphere5"/>
+                  <geom type="sphere" size="0.025" pos="0.01 0.085 -0.11"
+                    contype="1" conaffinity="1" group="4"
+                    rgba="0 0.5 1 0.3" name="richard_fr3_link5_collision_sphere6"/>
+                  <geom type="sphere" size="0.025" pos="0.01 0.09 -0.08"
+                    contype="1" conaffinity="1" group="4"
+                    rgba="0 0.5 1 0.3" name="richard_fr3_link5_collision_sphere7"/>
+                  <geom type="sphere" size="0.025" pos="0.01 0.095 -0.05"
+                    contype="1" conaffinity="1" group="4"
+                    rgba="0 0.5 1 0.3" name="richard_fr3_link5_collision_sphere8"/>
+                  <geom type="sphere" size="0.025" pos="-0.01 0.08 -0.14"
+                    contype="1" conaffinity="1" group="4"
+                    rgba="0 0.5 1 0.3" name="richard_fr3_link5_collision_sphere9"/>
+                  <geom type="sphere" size="0.025" pos="-0.01 0.085 -0.11"
+                    contype="1" conaffinity="1" group="4"
+                    rgba="0 0.5 1 0.3" name="richard_fr3_link5_collision_sphere10"/>
+                  <geom type="sphere" size="0.025" pos="-0.01 0.09 -0.08"
+                    contype="1" conaffinity="1" group="4"
+                    rgba="0 0.5 1 0.3" name="richard_fr3_link5_collision_sphere11"/>
+                  <geom type="sphere" size="0.025" pos="-0.01 0.095 -0.05"
+                    contype="1" conaffinity="1" group="4"
+                    rgba="0 0.5 1 0.3" name="richard_fr3_link5_collision_sphere12"/> 
                   <body name="richard_fr3_link6" quat="0.707107 0.707107 0 0">
                     <inertial pos="0.0597131 -0.0410295 -0.0101693" quat="0.621301 0.552665 0.510011 0.220081" mass="1.81704" diaginertia="0.0175039 0.0161123 0.00193529" />
                     <joint name="richard_fr3_joint6" pos="0 0 0" axis="0 0 1" range="0.5445 4.5169" actuatorfrcrange="-12 12" damping="0.003" frictionloss="0.2" />
                     <geom name="richard_fr3_link6_visual"  mesh="link6_visual" class="visualgeom" />
+                    <!-- Add the spheres -->
+                    <geom type="sphere" size="0.05" pos="0.0 0.0 0.0"
+                      contype="1" conaffinity="1" group="4"
+                      rgba="0 0.5 1 0.3" name="richard_fr3_link6_collision_sphere1"/>
+                    <geom type="sphere" size="0.05" pos="0.08 -0.01 0.0"
+                      contype="1" conaffinity="1" group="4"
+                      rgba="0 0.5 1 0.3" name="richard_fr3_link6_collision_sphere2"/>
+                    <geom type="sphere" size="0.052" pos="0.08 0.035 0.0"
+                      contype="1" conaffinity="1" group="4"
+                      rgba="0 0.5 1 0.3" name="richard_fr3_link6_collision_sphere3"/>
                     <geom name="richard_fr3_link6_collision" type="mesh" mesh="link6_collision"  class="collision" />
                     <body name="richard_fr3_link7" pos="0.088 0 0" quat="0.707107 0.707107 0 0">
                       <inertial pos="0.00452258 0.00862619 -0.0161633" quat="0.727579 0.0978688 -0.24906 0.63168" mass="0.627143" diaginertia="0.000223836 0.000223642 5.64132e-07" />
@@ -201,7 +370,22 @@
                       <geom name="richard_fr3_link7_visual"  mesh="link7_visual" class="visualgeom" />
                       <geom type="mesh" rgba="" mesh="link7_visual" />
                       <geom name="richard_fr3_link7_collision" type="mesh" mesh="link7_collision"  class="collision" />
-                      <!-- geom type="mesh" rgba="" mesh="link7_collision" / -->
+                      <!-- Add the spheres -->
+                      <geom type="sphere" size="0.05" pos="0.0 0.0 0.07"
+                        contype="1" conaffinity="1" group="4"
+                        rgba="0 0.5 1 0.3" name="richard_fr3_link7_collision_sphere1"/>
+                      <geom type="sphere" size="0.025" pos="0.02 0.04 0.08"
+                        contype="1" conaffinity="1" group="4"
+                        rgba="0 0.5 1 0.3" name="richard_fr3_link7_collision_sphere2"/>
+                      <geom type="sphere" size="0.025" pos="0.04 0.02 0.08"
+                        contype="1" conaffinity="1" group="4"
+                        rgba="0 0.5 1 0.3" name="richard_fr3_link7_collision_sphere3"/>
+                      <geom type="sphere" size="0.02" pos="0.04 0.06 0.085"
+                        contype="1" conaffinity="1" group="4"
+                        rgba="0 0.5 1 0.3" name="richard_fr3_link7_collision_sphere4"/>
+                      <geom type="sphere" size="0.02" pos="0.06 0.04 0.085"
+                        contype="1" conaffinity="1" group="4"
+                        rgba="0 0.5 1 0.3" name="richard_fr3_link7_collision_sphere5"/>
                     </body>
                   </body>
                 </body>

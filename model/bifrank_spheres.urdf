@@ -1,0 +1,44 @@
+Link::Mesh: panda_link0::meshes/collision/link0.obj
+  Target Spheres: 2
+Spherizing panda_link0::meshes/collision/link0.obj
+Processing pre-loaded mesh
+Link::Mesh: panda_link1::meshes/collision/link1.obj
+  Target Spheres: 2
+Spherizing panda_link1::meshes/collision/link1.obj
+Processing pre-loaded mesh
+Link::Mesh: panda_link2::meshes/collision/link2.obj
+  Target Spheres: 3
+Spherizing panda_link2::meshes/collision/link2.obj
+Processing pre-loaded mesh
+Link::Mesh: panda_link3::meshes/collision/link3.obj
+  Target Spheres: 2
+Spherizing panda_link3::meshes/collision/link3.obj
+Processing pre-loaded mesh
+Link::Mesh: panda_link4::meshes/collision/link4.obj
+  Target Spheres: 2
+Spherizing panda_link4::meshes/collision/link4.obj
+Processing pre-loaded mesh
+Link::Mesh: panda_link5::meshes/collision/link5.obj
+  Target Spheres: 4
+Spherizing panda_link5::meshes/collision/link5.obj
+Processing pre-loaded mesh
+Link::Mesh: panda_link6::meshes/collision/link6.obj
+  Target Spheres: 2
+Spherizing panda_link6::meshes/collision/link6.obj
+Processing pre-loaded mesh
+Link::Mesh: panda_link7::meshes/collision/link7.obj
+  Target Spheres: 2
+Spherizing panda_link7::meshes/collision/link7.obj
+Processing pre-loaded mesh
+Link::Mesh: panda_hand::meshes/collision/hand.obj
+  Target Spheres: 5
+Spherizing panda_hand::meshes/collision/hand.obj
+Processing pre-loaded mesh
+Link::Mesh: panda_leftfinger::meshes/collision/finger.obj
+  Target Spheres: 3
+Spherizing panda_leftfinger::meshes/collision/finger.obj
+Processing pre-loaded mesh
+Link::Mesh: panda_rightfinger::meshes/collision/finger.obj
+  Target Spheres: 3
+Spherizing panda_rightfinger::meshes/collision/finger.obj
+Processing pre-loaded mesh
