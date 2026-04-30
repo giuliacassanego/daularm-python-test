@@ -243,12 +243,10 @@ def get_link_name(geom_name):
 # minimum distance for each unique unordered link pair.
 # ─────────────────────────────────────────────────────────
 def filter_collision_pairs_by_link(raw_pairs):
-    """
-    raw_pairs : list of dicts with keys:
-        dist, point1, point2, J1, J2, normal, obj1, obj2, pair_idx
-    Returns: filtered list — one entry per unique (link1, link2) pair,
-             the one with minimum dist.
-    """
+    # raw_pairs : list of dicts with keys:
+    #     dist, point1, point2, J1_id, J2_id, normal, obj1, obj2, pair_idx
+    # Returns: filtered list — one entry per unique (link1, link2) pair,
+    #          the one with minimum dist.
     best = {}  # key: frozenset({link1, link2}) -> dict entry
     for entry in raw_pairs:
         l1 = get_link_name(entry['obj1'])
@@ -260,7 +258,7 @@ def filter_collision_pairs_by_link(raw_pairs):
 
 DT = model_mj.opt.timestep
 print("Simulation timestep (DT):", DT)
-sim_time = 6.0
+sim_time = 12.0 # period = 6
 steps = int(sim_time / DT)
 
 log_t = []
@@ -274,15 +272,13 @@ log_right_ee_vel = []
 
 t = 0.0
 
-log_coll_dist = []
-log_tau = []
-
 # viz = MeshcatVisualizer(model, geom_model, geom_model) # (model, collision_model, visual_model)
 # viz.initViewer(open=True)
 
 # viz.loadViewerModel("pinocchio")
 
 collision_log = []  # list of dicts, one per triggered pair per timestep
+log_tau = []
 
 d_start = 0.15 # 15 cm
 
@@ -302,6 +298,7 @@ for k in range(steps):
     pin.computeDistances(geom_model, geom_data)
 
     tau_collision = np.zeros(model.nv) # restart at each step
+    log_tau_coll = []
 
     viewer.user_scn.ngeom = 0  # clear previous arrows
 
@@ -358,12 +355,13 @@ for k in range(steps):
         # apply avoidance torque
         # force direction: from p1 to p2 (- normal)
         normal = - entry['normal']
-        force_mag = repulsive_force_linear(entry['dist'], d_start, F_max = 3) # TODO: tune F_max, try linear and quadratic
-        # force_mag = repulsive_force_quadratic(entry['dist'], d_start, F_max = 3) # TODO: tune F_max
+        # force_mag = repulsive_force_linear(entry['dist'], d_start, F_max = 3) # TODO: tune F_max, try linear and quadratic
+        force_mag = repulsive_force_quadratic(entry['dist'], d_start, F_max = 3) # TODO: tune F_max
         force_vec = force_mag * normal
         # relative jacobian (J1 - J2) but only linear part (top 3 rows) since we want a force, not a torque
         J_rel = Jp1[0:3, :] - Jp2[0:3, :]
         tau_collision += J_rel.T @ force_vec
+        log_tau_coll.append(tau_collision.copy())
 
         # force visualization
         with viewer.lock():
@@ -400,7 +398,11 @@ for k in range(steps):
     tau_impedance = impedance_control(q, dq, q_des, dq_des, ddq_des, M, nle)
 
     tau_tot = tau_impedance + tau_collision # TODO: chage pd with impedance
-    log_tau.append(tau_tot.copy())
+    log_tau.append({
+        't': t,
+        'collision': log_tau_coll,
+        'impedance': tau_impedance.copy(),
+        'total': tau_tot.copy(),})
 
     # Apply to Mujoco
     data_mj.ctrl[:] = tau_tot
@@ -416,15 +418,13 @@ for k in range(steps):
     log_q.append(q.copy())
     log_dq.append(dq.copy())
 
-
     t += DT
-
 
 log_q = np.array(log_q)
 log_t = np.array(log_t)
 
-print(f"Final Joint Positions:\n{log_q[-1]}") # last row
-print(f"Desired Joint Positions:\n{q_approach}")
+# print(f"Final Joint Positions:\n{log_q[-1]}") # last row
+# print(f"Desired Joint Positions:\n{q_goal}")
 
 # log_left_ee_pos = np.array(log_links_frames['lewis_fr3_link8'])
 # log_right_ee_pos = np.array(log_links_frames['richard_fr3_link8'])
@@ -443,7 +443,7 @@ for entry in collision_log:
     # file_out.write(f"  J2:\n{entry['J2']}\n\n")
 file_out.close()
 
-file_out = open("torqes.txt", "w")
-for tau in log_tau:
-    file_out.write(f"{tau}\n")
+file_out = open("torques.txt", "w")
+for entry in log_tau:
+    file_out.write(f"t={entry['t']:.4f}s | collision tau: {entry['collision']} \n impedance tau: {entry['impedance']} \n total tau: {entry['total']}\n\n")
 file_out.close()
