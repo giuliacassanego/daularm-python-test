@@ -236,6 +236,30 @@ def get_link_name(geom_name):
         return parts[0]
     return geom_name  # fallback
 
+# -----------------------------------
+# DAMPING FORCE CALCULATIONS
+# -----------------------------------
+def collision_damping_force(dist, v_rel, d_start, v_ths, d_max):
+    # attivo solo vicino e in avvicinamento
+    if dist >= d_start:
+        return 0.0
+    if v_rel >= v_ths:   # se v_ths = 0, attivo solo quando si chiudono
+        return 0.0
+
+    # distanza normalizzata: 1 lontano, 0 al contatto
+    xi = np.clip(dist / d_start, 0.0, 1.0)
+
+    # profilo h(x): nel paper vogliono crescita smooth con h(0)=0 e h(1)=1
+    # scelta semplice:
+    h = 1.0 - xi**2
+
+    # damping crescente vicino al contatto, saturato
+    d = d_max * h
+
+    # forza dissipativa scalare, sempre opposta al closing motion
+    f = -d * v_rel
+    return max(0.0, f)
+
 # ─────────────────────────────────────────────────────────
 # Post-process collision pairs - one per (link_A, link_B)
 #
@@ -281,6 +305,8 @@ collision_log = []  # list of dicts, one per triggered pair per timestep
 log_tau = []
 
 d_start = 0.15 # 15 cm
+
+AVOIDANCE_MODE = 'damping' # 'repulsive' or 'damping'
 
 for k in range(steps):
 
@@ -352,16 +378,34 @@ for k in range(steps):
         entry['J2'] = Jp2
         collision_log.append(entry)
 
-        # apply avoidance torque
-        # force direction: from p1 to p2 (- normal)
-        normal = - entry['normal']
-        # force_mag = repulsive_force_linear(entry['dist'], d_start, F_max = 3) # TODO: tune F_max, try linear and quadratic
-        force_mag = repulsive_force_quadratic(entry['dist'], d_start, F_max = 3) # TODO: tune F_max
-        force_vec = force_mag * normal
-        # relative jacobian (J1 - J2) but only linear part (top 3 rows) since we want a force, not a torque
-        J_rel = Jp1[0:3, :] - Jp2[0:3, :]
-        tau_collision += J_rel.T @ force_vec
-        log_tau_coll.append(tau_collision.copy())
+        if AVOIDANCE_MODE == 'repulsive':
+            # apply avoidance torque
+            # force direction: from p1 to p2 (- normal)
+            normal = - entry['normal']
+            # force_mag = repulsive_force_linear(entry['dist'], d_start, F_max = 3) # TODO: tune F_max, try linear and quadratic
+            force_mag = repulsive_force_quadratic(entry['dist'], d_start, F_max = 3) # TODO: tune F_max
+            force_vec = force_mag * normal
+            # relative jacobian (J1 - J2) but only linear part (top 3 rows) since we want a force, not a torque
+            J_rel = Jp1[0:3, :] - Jp2[0:3, :]
+            tau_collision += J_rel.T @ force_vec
+            log_tau_coll.append(tau_collision.copy())
+            entry['mode'] = AVOIDANCE_MODE
+            collision_log.append(entry)
+        
+        elif AVOIDANCE_MODE == 'damping':
+            # apply avoidance damping force
+            # force direction: from p1 to p2 (- normal)
+            normal = - entry['normal']
+            J_rel = Jp1[0:3, :] - Jp2[0:3, :]
+            v_rel = normal @ (J_rel @ dq)
+            f_damp = collision_damping_force(dist=entry['dist'], v_rel=v_rel, d_start=d_start, v_ths=0.0, d_max=40.0) # TODO: tune v_ths and d_max
+            force_vec = f_damp * normal
+            tau_collision += J_rel.T @ force_vec
+            log_tau_coll.append(tau_collision.copy())
+            entry['mode'] = AVOIDANCE_MODE
+            entry['v_rel'] = v_rel
+            collision_log.append(entry)
+
 
         # force visualization
         with viewer.lock():
@@ -401,6 +445,7 @@ for k in range(steps):
     log_tau.append({
         't': t,
         'collision': log_tau_coll,
+        # 'pd': tau_pd.copy(),
         'impedance': tau_impedance.copy(),
         'total': tau_tot.copy(),})
 
@@ -437,6 +482,7 @@ file_out = open("collisions.txt", "w")
 for entry in collision_log:
     file_out.write(f"t={entry['t']:.4f}s | pair {entry['pair_idx']}: "
                    f"{entry['obj1']} <-> {entry['obj2']} | dist={entry['dist']:.4f}m\n")
+    file_out.write(f"  Mode: {entry['mode']} | v_rel={entry.get('v_rel', 0.0):.4f}m/s\n")
     file_out.write(f"  Point1: {entry['point1']}\n")
     file_out.write(f"  Point2: {entry['point2']}\n\n")
     # file_out.write(f"  J1:\n{entry['J1']}\n")
