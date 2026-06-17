@@ -177,7 +177,7 @@ def desired_trajectory_1(t):
 q0, _ = get_pin_state_from_mujoco()
 
 # Approach configuration: joint2 of each arm swings inward
-APPROACH_DELTA = 0.9   # radians - TODO: tune this to how close you want them (0.9 collision)
+APPROACH_DELTA = 1.1   # radians - TODO: tune this to how close you want them (0.9 / 1.1 collision) [verify]
 
 q_approach = q0.copy()
 q_approach[2] += APPROACH_DELTA     # lewis joint2
@@ -239,26 +239,34 @@ def get_link_name(geom_name):
 # -----------------------------------
 # DAMPING FORCE CALCULATIONS
 # -----------------------------------
-def collision_damping_force(dist, v_rel, d_start, v_ths, d_max):
-    # attivo solo vicino e in avvicinamento
+def force_profile(x): #h_i(x) in Niko's paper: smooth, h(0)=0, h(1)=1
+    x = np.clip(x, 0.0, 1.0) # forcing x in the interval [0,1]
+    h1 = 1
+    h2 = x**(1/5)
+    h3 = x
+    h4 = x**5
+    h5 = -2*x**3 + 3*x**2
+    return h5
+
+H1_h5 = 0.5
+
+def collision_damping_coeff(dist, v_rel, eta, d_start, v_ths = -0.001, d_max = 200, eps=1e-4): #eta = relative inertia
+    if v_ths > 0:
+        return 0.0  # no damping if threshold is positive --> moving away
+    # activation and thresholds [Niko's paper]
     if dist >= d_start:
-        return 0.0
-    if v_rel >= v_ths:   # se v_ths = 0, attivo solo quando si chiudono
-        return 0.0
+        return 0.0 # no damping if distance is above threshold
+    if v_rel > v_ths:
+        return 0.0 # no damping if moving away
 
-    # distanza normalizzata: 1 lontano, 0 al contatto
-    xi = np.clip(dist / d_start, 0.0, 1.0)
+    # to avoid numerical issue (division by zero)
+    xi = max(eps, dist)
+    x_val = (d_start - xi) / d_start # normalizing distance to [0,1], where 0 is at d_start and 1 is at contact (xi=0)
+    h_val = force_profile(x_val)
 
-    # profilo h(x): nel paper vogliono crescita smooth con h(0)=0 e h(1)=1
-    # scelta semplice:
-    h = 1.0 - xi**2
-
-    # damping crescente vicino al contatto, saturato
-    d = d_max * h
-
-    # forza dissipativa scalare, sempre opposta al closing motion
-    f = -d * v_rel
-    return max(0.0, f)
+    # eq 10 Niko's paper
+    d_coeff = (eta / H1_h5) * ((v_ths - v_rel) / xi) * h_val
+    return max(0.0, min(d_coeff, d_max)) # ensure non-negative and limited at d_max
 
 # ─────────────────────────────────────────────────────────
 # Post-process collision pairs - one per (link_A, link_B)
@@ -306,12 +314,20 @@ log_tau = []
 
 d_start = 0.15 # 15 cm
 
+
 AVOIDANCE_MODE = 'damping' # 'repulsive' or 'damping'
 
 for k in range(steps):
 
     # Get state from Mujoco
     q, dq = get_pin_state_from_mujoco()
+
+    # Desired
+    # q_des, dq_des, ddq_des = desired_trajectory_1(t)
+    q_des, dq_des, ddq_des = desired_trajectory(t)   # with collisions
+
+    # get dynamics
+    M, nle = compute_pin_dynamics(q, dq)
 
     # Forward kinematics
     pin.forwardKinematics(model, data, q, dq)
@@ -383,7 +399,7 @@ for k in range(steps):
             # force direction: from p1 to p2 (- normal)
             normal = - entry['normal']
             # force_mag = repulsive_force_linear(entry['dist'], d_start, F_max = 3) # TODO: tune F_max, try linear and quadratic
-            force_mag = repulsive_force_quadratic(entry['dist'], d_start, F_max = 3) # TODO: tune F_max
+            force_mag = repulsive_force_quadratic(entry['dist'], d_start, F_max = 2) # TODO: tune F_max
             force_vec = force_mag * normal
             # relative jacobian (J1 - J2) but only linear part (top 3 rows) since we want a force, not a torque
             J_rel = Jp1[0:3, :] - Jp2[0:3, :]
@@ -394,16 +410,31 @@ for k in range(steps):
         
         elif AVOIDANCE_MODE == 'damping':
             # apply avoidance damping force
-            # force direction: from p1 to p2 (- normal)
+            # force direction: from p1 to p2 (- normal) [pushing away]
             normal = - entry['normal']
             J_rel = Jp1[0:3, :] - Jp2[0:3, :]
-            v_rel = normal @ (J_rel @ dq)
-            f_damp = collision_damping_force(dist=entry['dist'], v_rel=v_rel, d_start=d_start, v_ths=0.0, d_max=40.0) # TODO: tune v_ths and d_max
-            force_vec = f_damp * normal
+            # projection along the line
+            J_rel_line = normal.reshape(1,3) @ J_rel #shape (1, nv)
+            v_rel = (J_rel_line @ dq)[0] # scalar relative velocity along the line
+
+            M_inv = np.linalg.inv(M)
+            eta_inv = (J_rel_line @ M_inv @ J_rel_line.T)[0,0] # scalar effective inertia along the line
+            eta = 1.0 / eta_inv if eta_inv > 1e-6 else 1.0 #TODO: handle zero or near-zero case better
+
+            # damping thresholds
+            v_ths = -0.001 # m/s, TODO: tune this threshold for "closing speed" below which damping activates
+            d_max = 200.0 # max damping coeff, TODO: tune this to limit the maximum damping force
+            eps = 1e-4 # to avoid numerical issues when dist is very small
+            d_coeff = collision_damping_coeff(dist=entry['dist'], v_rel=v_rel, eta=eta, d_start=d_start, v_ths=v_ths,
+                                               d_max=d_max, eps=eps) # TODO: tune v_ths and d_max
+            force_damp_scalar = - d_coeff * v_rel # damping force magnitude
+            force_vec = force_damp_scalar * normal
             tau_collision += J_rel.T @ force_vec
             log_tau_coll.append(tau_collision.copy())
             entry['mode'] = AVOIDANCE_MODE
             entry['v_rel'] = v_rel
+            entry['eta'] = eta
+            entry['d_coeff'] = d_coeff
             collision_log.append(entry)
 
 
@@ -428,20 +459,14 @@ for k in range(steps):
             )
             viewer.user_scn.ngeom += 1
 
-    # Desired
-    # q_des, dq_des, ddq_des = desired_trajectory_1(t)
-    q_des, dq_des, ddq_des = desired_trajectory(t)   # with collisions
 
     # Joint PD
     # tau_pd = pd_control(q, dq, q_des, dq_des)
 
-    # get dynamics
-    M, nle = compute_pin_dynamics(q, dq)
-
     # Compute torque from Pinocchio impedance
     tau_impedance = impedance_control(q, dq, q_des, dq_des, ddq_des, M, nle)
 
-    tau_tot = tau_impedance + tau_collision # TODO: chage pd with impedance
+    tau_tot = tau_impedance + tau_collision 
     log_tau.append({
         't': t,
         'collision': log_tau_coll,
