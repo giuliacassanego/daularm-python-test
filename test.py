@@ -177,7 +177,7 @@ def desired_trajectory_1(t):
 q0, _ = get_pin_state_from_mujoco()
 
 # Approach configuration: joint2 of each arm swings inward
-APPROACH_DELTA = 1.1   # radians - TODO: tune this to how close you want them (0.9 / 1.1 collision) [verify]
+APPROACH_DELTA = 1.02   # radians - TODO: tune this to how close you want them (1.02 collision)
 
 q_approach = q0.copy()
 q_approach[2] += APPROACH_DELTA     # lewis joint2
@@ -239,20 +239,17 @@ def get_link_name(geom_name):
 # -----------------------------------
 # DAMPING FORCE CALCULATIONS
 # -----------------------------------
-def force_profile(x): #h_i(x) in Niko's paper: smooth, h(0)=0, h(1)=1
-    x = np.clip(x, 0.0, 1.0) # forcing x in the interval [0,1]
-    h1 = 1
-    h2 = x**(1/5)
-    h3 = x
-    h4 = x**5
-    h5 = -2*x**3 + 3*x**2
-    return h5
+def force_profile_and_antiderivative(i,x): # returns h_i(x) and H_i(x) where H_i is the integral of h_i from 0 to 1, i in [1,5]
+    x = np.clip(x, 0.0, 1.0) # to ensure x is in the interval [0,1]
+    i = i - 1 # to have i in [0,4] for indexing
+    h = [1, x**(1/5), x, x**5, -2*x**3 + 3*x**2] #h_i(x) in Niko's paper: smooth, h(0)=0, h(1)=1
+    H1 = [1, 5/6, 0.5, 1/6, 0.5]
+    return h[i], H1[i]
 
-H1_h5 = 0.5
 
 def collision_damping_coeff(dist, v_rel, eta, d_start, v_ths = -0.001, d_max = 200, eps=1e-4): #eta = relative inertia
     if v_ths > 0:
-        return 0.0  # no damping if threshold is positive --> moving away
+        return 0.0  # no damping if threshold is positive --> moving away TODO: maybe error message ?
     # activation and thresholds [Niko's paper]
     if dist >= d_start:
         return 0.0 # no damping if distance is above threshold
@@ -262,10 +259,10 @@ def collision_damping_coeff(dist, v_rel, eta, d_start, v_ths = -0.001, d_max = 2
     # to avoid numerical issue (division by zero)
     xi = max(eps, dist)
     x_val = (d_start - xi) / d_start # normalizing distance to [0,1], where 0 is at d_start and 1 is at contact (xi=0)
-    h_val = force_profile(x_val)
+    [h_val, H1] = force_profile_and_antiderivative(5, x_val) # TODO: choose i in [1,5]
 
     # eq 10 Niko's paper
-    d_coeff = (eta / H1_h5) * ((v_ths - v_rel) / xi) * h_val
+    d_coeff = (eta / H1) * ((v_ths - v_rel) / xi) * h_val
     return max(0.0, min(d_coeff, d_max)) # ensure non-negative and limited at d_max
 
 # ─────────────────────────────────────────────────────────
@@ -296,11 +293,11 @@ steps = int(sim_time / DT)
 log_t = []
 log_q = []
 log_dq = []
-log_left_ee_pos = []
-log_left_ee_vel = []
+# log_left_ee_pos = []
+# log_left_ee_vel = []
 
-log_right_ee_pos = []
-log_right_ee_vel = []
+# log_right_ee_pos = []
+# log_right_ee_vel = []
 
 t = 0.0
 
@@ -340,7 +337,6 @@ for k in range(steps):
     pin.computeDistances(geom_model, geom_data)
 
     tau_collision = np.zeros(model.nv) # restart at each step
-    log_tau_coll = []
 
     viewer.user_scn.ngeom = 0  # clear previous arrows
 
@@ -392,21 +388,19 @@ for k in range(steps):
         
         entry['J1'] = Jp1
         entry['J2'] = Jp2
-        collision_log.append(entry)
 
         if AVOIDANCE_MODE == 'repulsive':
             # apply avoidance torque
             # force direction: from p1 to p2 (- normal)
             normal = - entry['normal']
-            # force_mag = repulsive_force_linear(entry['dist'], d_start, F_max = 3) # TODO: tune F_max, try linear and quadratic
-            force_mag = repulsive_force_quadratic(entry['dist'], d_start, F_max = 2) # TODO: tune F_max
+            # force_mag = repulsive_force_linear(entry['dist'], d_start, F_max = 2) # TODO: tune F_max, try linear and quadratic
+            force_mag = repulsive_force_quadratic(entry['dist'], d_start, F_max = 3) # TODO: tune F_max --> 30
             force_vec = force_mag * normal
             # relative jacobian (J1 - J2) but only linear part (top 3 rows) since we want a force, not a torque
             J_rel = Jp1[0:3, :] - Jp2[0:3, :]
             tau_collision += J_rel.T @ force_vec
-            log_tau_coll.append(tau_collision.copy())
             entry['mode'] = AVOIDANCE_MODE
-            collision_log.append(entry)
+            entry['force_mag'] = force_mag
         
         elif AVOIDANCE_MODE == 'damping':
             # apply avoidance damping force
@@ -414,28 +408,32 @@ for k in range(steps):
             normal = - entry['normal']
             J_rel = Jp1[0:3, :] - Jp2[0:3, :]
             # projection along the line
-            J_rel_line = normal.reshape(1,3) @ J_rel #shape (1, nv)
+            J_rel_line = normal.reshape(1,3) @ J_rel #shape (1, nv) = (1, 15)
             v_rel = (J_rel_line @ dq)[0] # scalar relative velocity along the line
 
             M_inv = np.linalg.inv(M)
             eta_inv = (J_rel_line @ M_inv @ J_rel_line.T)[0,0] # scalar effective inertia along the line
-            eta = 1.0 / eta_inv if eta_inv > 1e-6 else 1.0 #TODO: handle zero or near-zero case better
+            lambda__sq_reg = 1e-6 # Damped Least Squares regularization to avoid singularity
+            eta = 1.0 / (eta_inv + lambda__sq_reg)  #TODO: handle zero or near-zero case with regularization, good ?
 
             # damping thresholds
-            v_ths = -0.001 # m/s, TODO: tune this threshold for "closing speed" below which damping activates
-            d_max = 200.0 # max damping coeff, TODO: tune this to limit the maximum damping force
+            # grid v_ths = [-0.02, -0.01, -0.005, -0.002, -0.001] with d_max = 120.0 --> -0.005 or -0.001
+            v_ths = -0.005 # m/s, TODO: tune this threshold for closing speed below which damping activates
+            # grid d_max = [10, 20, 40, 80, 120, 160, 200] with v_ths = -0.01 --> 80 or 120
+            d_max = 80.0 # max damping coeff, TODO: tune this to limit the maximum damping force.
             eps = 1e-4 # to avoid numerical issues when dist is very small
             d_coeff = collision_damping_coeff(dist=entry['dist'], v_rel=v_rel, eta=eta, d_start=d_start, v_ths=v_ths,
-                                               d_max=d_max, eps=eps) # TODO: tune v_ths and d_max
+                                               d_max=d_max, eps=eps) 
             force_damp_scalar = - d_coeff * v_rel # damping force magnitude
             force_vec = force_damp_scalar * normal
             tau_collision += J_rel.T @ force_vec
-            log_tau_coll.append(tau_collision.copy())
             entry['mode'] = AVOIDANCE_MODE
             entry['v_rel'] = v_rel
             entry['eta'] = eta
             entry['d_coeff'] = d_coeff
-            collision_log.append(entry)
+            entry['force_damp_scalar'] = force_damp_scalar
+            
+        collision_log.append(entry)
 
 
         # force visualization
@@ -469,7 +467,8 @@ for k in range(steps):
     tau_tot = tau_impedance + tau_collision 
     log_tau.append({
         't': t,
-        'collision': log_tau_coll,
+        'mode': AVOIDANCE_MODE,
+        'collision': tau_collision.copy(),
         # 'pd': tau_pd.copy(),
         'impedance': tau_impedance.copy(),
         'total': tau_tot.copy(),})
@@ -509,12 +508,16 @@ for entry in collision_log:
                    f"{entry['obj1']} <-> {entry['obj2']} | dist={entry['dist']:.4f}m\n")
     file_out.write(f"  Mode: {entry['mode']} | v_rel={entry.get('v_rel', 0.0):.4f}m/s\n")
     file_out.write(f"  Point1: {entry['point1']}\n")
-    file_out.write(f"  Point2: {entry['point2']}\n\n")
+    file_out.write(f"  Point2: {entry['point2']}\n")
+    file_out.write(f"  Repulsive Force: {entry.get('force_mag', 'N/A')}\n")
+    file_out.write(f"  Inertia: {entry.get('eta', 'N/A')}\n")
+    file_out.write(f"  Damping Coeff: {entry.get('d_coeff', 'N/A')}\n")
+    file_out.write(f"  Damping Force: {entry.get('force_damp_scalar', 'N/A')}\n\n")
     # file_out.write(f"  J1:\n{entry['J1']}\n")
     # file_out.write(f"  J2:\n{entry['J2']}\n\n")
 file_out.close()
 
 file_out = open("torques.txt", "w")
 for entry in log_tau:
-    file_out.write(f"t={entry['t']:.4f}s | collision tau: {entry['collision']} \n impedance tau: {entry['impedance']} \n total tau: {entry['total']}\n\n")
+    file_out.write(f"t={entry['t']:.4f}s | Mode: {entry['mode']} \n  collision tau: {entry['collision']} \n impedance tau: {entry['impedance']} \n total tau: {entry['total']}\n\n")
 file_out.close()
