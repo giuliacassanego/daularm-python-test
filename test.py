@@ -5,6 +5,10 @@ import pinocchio as pin
 from pinocchio.robot_wrapper import RobotWrapper
 from pinocchio.visualize import MeshcatVisualizer
 
+import matplotlib
+matplotlib.use('agg')  # Forza l'uso di Tkinter, che di solito schiva questo bug su Mac
+import matplotlib.pyplot as plt
+
 import os
 file_path = os.path.abspath(".")
 # get the path of the dualarm robot
@@ -141,7 +145,7 @@ def impedance_control(q, dq, q_des, dq_des, ddq_des, M, nle):
     # Pinocchio impedance control law --> redundant: already arguments of function
     # M, nle = compute_pin_dynamics(q, dq) 
 
-    # Joint torques
+    # Joint torques [Computed torque [CT] - controller]  
     tau = M @ (ddq_des + Kd @ de + Kp @ e) + nle
 
     return tau
@@ -179,11 +183,73 @@ q0, _ = get_pin_state_from_mujoco()
 # Approach configuration: joint2 of each arm swings inward
 APPROACH_DELTA = 1.02   # radians - TODO: tune this to how close you want them (1.02 collision)
 
-q_approach = q0.copy()
-q_approach[2] += APPROACH_DELTA     # lewis joint2
-q_approach[3] -= APPROACH_DELTA     # lewis joint3 
-q_approach[9] += APPROACH_DELTA     # richard joint2 
-q_approach[10] += APPROACH_DELTA    # richard joint3 
+# TRAJECTORY 1 with approach_delta = 1.02, F_max = 5, d_max 200
+# q_approach = q0.copy()
+# q_approach[2] += APPROACH_DELTA     # lewis joint2
+# q_approach[3] -= APPROACH_DELTA     # lewis joint3 
+# q_approach[9] += APPROACH_DELTA     # richard joint2 
+# q_approach[10] += APPROACH_DELTA    # richard joint3 
+
+# TRAJECTORY 2
+from scipy.optimize import minimize
+
+def wrist_position(q_full, model, data, frame_id):
+    pin.forwardKinematics(model, data, q_full)
+    pin.updateFramePlacements(model, data)
+    return data.oMf[frame_id].translation.copy()
+
+def solve_ik_scipy(model, q0_full, moving_frame_name, target_pos,
+                    active_idx, w_reg=0.05, joint_limits=True):
+    data_ik = model.createData()   # <-- data SEPARATA, non tocca quella della sim
+    fid = model.getFrameId(moving_frame_name)
+
+    q_fixed = q0_full.copy()
+
+    def cost(x):
+        q_full = q_fixed.copy()
+        q_full[active_idx] = x
+        pos = wrist_position(q_full, model, data_ik, fid)
+        pos_err = np.sum((pos - target_pos)**2)
+        reg_err = np.sum((x - q0_full[active_idx])**2)
+        return pos_err + w_reg * reg_err
+
+    x0 = q0_full[active_idx]
+
+    bounds = None
+    if joint_limits:
+        lo = model.lowerPositionLimit[active_idx]
+        hi = model.upperPositionLimit[active_idx]
+        bounds = list(zip(lo, hi))
+
+    res = minimize(cost, x0, method='L-BFGS-B', bounds=bounds,
+                    options={'maxiter': 500, 'ftol': 1e-10})
+
+    q_full = q_fixed.copy()
+    q_full[active_idx] = res.x
+    final_pos = wrist_position(q_full, model, data_ik, fid)
+    print(f"IK scipy: successo={res.success}, err finale={np.linalg.norm(final_pos - target_pos):.5f} m")
+    print("Delta rispetto a q0 sui giunti attivi:", res.x - x0)
+    return q_full
+
+richard_forearm_frame = "richard_fr3_link4"   # verifica il nome esatto
+lewis_wrist_frame     = "lewis_fr3_link7"      # verifica il nome esatto
+
+data_tmp = model.createData()
+pin.forwardKinematics(model, data_tmp, q0)
+pin.updateFramePlacements(model, data_tmp)
+fid_target = model.getFrameId(richard_forearm_frame)
+target_center = data_tmp.oMf[fid_target].translation.copy()
+
+approach_dir = np.array([0.0, -1.0, 0.0])
+approach_dir /= np.linalg.norm(approach_dir)
+target_pos = target_center + 0.05 * approach_dir
+
+active_idx = [1, 2, 3, 4, 5, 6]   # giunti 2-7 di lewis, escluso il polso finale
+q_approach = solve_ik_scipy(model, q0, lewis_wrist_frame, target_pos, active_idx)
+
+print("q0:       ", q0)
+print("q_approach:", q_approach)
+print("Delta:    ", q_approach - q0)
 
 T_phase = 3.0   # seconds per phase (approach or retract)
 
@@ -214,14 +280,14 @@ def desired_trajectory(t):
 def repulsive_force_quadratic(d, d_start, F_max):
     if d < d_start:
         # formula (15)
-        return ((F_max / (d_start **2)) * (d - d_start)**2)
+        return min(((F_max / (d_start **2)) * (d - d_start)**2), F_max)
     else:
         return 0
 
 def repulsive_force_linear(d, d_start, F_max):
     if d < d_start:
         # easier to tune but less smooth
-        return (F_max * (1.0 - d / d_start))
+        return min(F_max * (1.0 - d / d_start), F_max)
     else:
         return 0
 
@@ -394,7 +460,7 @@ for k in range(steps):
             # force direction: from p1 to p2 (- normal)
             normal = - entry['normal']
             # force_mag = repulsive_force_linear(entry['dist'], d_start, F_max = 2) # TODO: tune F_max, try linear and quadratic
-            force_mag = repulsive_force_quadratic(entry['dist'], d_start, F_max = 3) # TODO: tune F_max --> 30
+            force_mag = repulsive_force_quadratic(entry['dist'], d_start, F_max = 5) # TODO: tune F_max --> 5
             force_vec = force_mag * normal
             # relative jacobian (J1 - J2) but only linear part (top 3 rows) since we want a force, not a torque
             J_rel = Jp1[0:3, :] - Jp2[0:3, :]
@@ -414,13 +480,13 @@ for k in range(steps):
             M_inv = np.linalg.inv(M)
             eta_inv = (J_rel_line @ M_inv @ J_rel_line.T)[0,0] # scalar effective inertia along the line
             lambda__sq_reg = 1e-6 # Damped Least Squares regularization to avoid singularity
-            eta = 1.0 / (eta_inv + lambda__sq_reg)  #TODO: handle zero or near-zero case with regularization, good ?
+            eta = 1.0 / (eta_inv) #+ lambda__sq_reg)  #TODO: handle zero or near-zero case with regularization, good ?
 
             # damping thresholds
-            # grid v_ths = [-0.02, -0.01, -0.005, -0.002, -0.001] with d_max = 120.0 --> -0.005 or -0.001
+            # grid v_ths = [-0.02, -0.01, -0.005, -0.002, -0.001] with d_max = 120.0 --> -0.002
             v_ths = -0.005 # m/s, TODO: tune this threshold for closing speed below which damping activates
-            # grid d_max = [10, 20, 40, 80, 120, 160, 200] with v_ths = -0.01 --> 80 or 120
-            d_max = 80.0 # max damping coeff, TODO: tune this to limit the maximum damping force.
+            # grid d_max = [10, 20, 40, 80, 120, 160, 200] with v_ths = -0.01 --> 200 [Niko's]
+            d_max = 200.0 # max damping coeff, TODO: tune this to limit the maximum damping force.
             eps = 1e-4 # to avoid numerical issues when dist is very small
             d_coeff = collision_damping_coeff(dist=entry['dist'], v_rel=v_rel, eta=eta, d_start=d_start, v_ths=v_ths,
                                                d_max=d_max, eps=eps) 
@@ -521,3 +587,81 @@ file_out = open("torques.txt", "w")
 for entry in log_tau:
     file_out.write(f"t={entry['t']:.4f}s | Mode: {entry['mode']} \n  collision tau: {entry['collision']} \n impedance tau: {entry['impedance']} \n total tau: {entry['total']}\n\n")
 file_out.close()
+
+# GRAPHS
+q_des_history = []
+for t in log_t:
+    qd, _, _ = desired_trajectory(t)
+    q_des_history.append(qd)
+q_des_history = np.array(q_des_history)
+
+pos_error = q_des_history - log_q
+mean_pos_error = np.mean(np.abs(pos_error), axis=1)
+
+min_dist_history = np.ones_like(log_t) * d_start # default to d_start
+max_force_history = np.zeros_like(log_t)
+v_rel_history = np.zeros_like(log_t)
+
+for entry in collision_log:
+    t_idx = np.argmin(np.abs(log_t - entry['t']))
+    if entry['dist'] < min_dist_history[t_idx]:
+        min_dist_history[t_idx] = entry['dist']
+    
+    force_mag = entry.get('force_mag', 0.0) if entry['mode'] == 'repulsive' else entry.get('force_damp_scalar', 0.0)
+    if force_mag > max_force_history[t_idx]:
+        max_force_history[t_idx] = force_mag
+
+    if 'v_rel' in entry:
+        v_rel_history[t_idx] = entry['v_rel']
+
+tau_impedance_norm = np.linalg.norm(np.array([entry['impedance'] for entry in log_tau]), axis=1)
+tau_collision_norm = np.linalg.norm(np.array([entry['collision'] for entry in log_tau]), axis=1)
+
+fig, axs = plt.subplots(2, 2, figsize=(14, 10))
+fig.suptitle(f"Simulation Results - Mode: {AVOIDANCE_MODE.upper()}", fontsize=16, fontweight='bold')
+
+# 1. Grafico Distanza di Collisione
+axs[0, 0].plot(log_t, min_dist_history, label='Min Distance', color='crimson', lw=2)
+axs[0, 0].axhline(y=d_start, color='gray', linestyle='--', label='Activation Threshold (d_start)')
+axs[0, 0].set_title("Minimum Distance between Links")
+axs[0, 0].set_xlabel("Time [s]")
+axs[0, 0].set_ylabel("Distance [m]")
+axs[0, 0].grid(True, linestyle=':')
+axs[0, 0].legend()
+
+# 2. Grafico Forze di Evitamento
+axs[0, 1].plot(log_t, max_force_history, label='Max Avoidance Force', color='darkorange', lw=2)
+axs[0, 1].set_title(f"Repulsive/Damping Force Generated ({AVOIDANCE_MODE})")
+axs[0, 1].set_xlabel("Time [s]")
+axs[0, 1].set_ylabel("Force [N]")
+axs[0, 1].grid(True, linestyle=':')
+axs[0, 1].legend()
+
+# 3. Grafico Velocità Relativa (Utile per la modalità Damping)
+if AVOIDANCE_MODE == 'damping':
+    axs[1, 0].plot(log_t, v_rel_history, label='Relative Velocity (v_rel)', color='darkblue', lw=2)
+    axs[1, 0].axhline(y=-0.005, color='purple', linestyle='--', label='Velocity Threshold (v_ths)') # v_ths del tuo codice
+    axs[1, 0].set_ylabel("Relative Velocity [m/s]")
+    axs[1, 0].set_title("Relative Velocity along the Impact Line")
+else:
+    # Se in modalità repulsiva, mostriamo la norma delle coppie inviate ai giunti
+    axs[1, 0].plot(log_t, tau_impedance_norm, label='Impedance Torque Norm', color='teal')
+    axs[1, 0].plot(log_t, tau_collision_norm, label='Collision Torque Norm', color='red', linestyle='--')
+    axs[1, 0].set_ylabel("Torque [Nm]")
+    axs[1, 0].set_title("Torque Norm")
+axs[1, 0].set_xlabel("Time [s]")
+axs[1, 0].grid(True, linestyle=':')
+axs[1, 0].legend()
+
+# 4. Errore di Inseguimento Traiettoria
+axs[1, 1].plot(log_t, mean_pos_error, label='Mean Absolute Error of Position (MAE)', color='forestgreen', lw=2)
+axs[1, 1].set_title("Trajectory Tracking Error")
+axs[1, 1].set_xlabel("Time [s]")
+axs[1, 1].set_ylabel("Error [rad]")
+axs[1, 1].grid(True, linestyle=':')
+axs[1, 1].legend()
+
+plt.tight_layout()
+plt.savefig(f"simulation_{AVOIDANCE_MODE}.png", dpi=300) # Salva un PNG spettacolare nella cartella del progetto
+print(f"Grafico salvato con successo in 'simulation_{AVOIDANCE_MODE}.png'!")
+plt.close()
